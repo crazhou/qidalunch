@@ -1,0 +1,80 @@
+@charset "utf-8";
+html,body,h1,h2,h3,ul,li,a,strong,form,input,textarea{
+  margin: 0;
+  padding: 0;
+}
+body{
+  background-color: #76b42d;
+  font-family: 'Microsoft Yahei', Arial;
+  font-size: 14px;
+}
+a{
+  text-decoration: none;
+  color:#08c;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clearfix:after{
+  content: '\20';
+  display: block;
+  clear: both;
+  height: 0;
+  font-size: 0;
+}
+.mgl {
+  margin-left:10px;
+}
+.header {
+  background-color: #333;
+  height: 60px;
+  box-shadow: 0 4px 8px 1px rgba(0,0,0,.3);
+}
+.header-inner {
+  width: 900px;
+  margin: 0 auto;
+}
+.header-inner .logo {
+  margin-top: 12px;
+}
+.header-inner .title {
+  color: #fff;
+  font-size: 2em;
+  margin: 7px 0 0 20px;
+}
+.app {
+  width: 900px;
+  margin: 20px auto 0;
+  background-color: #fff;
+  height: 550px;
+  text-align: center;
+  font-size: 1.4em;
+}
+.app .p {
+  padding-top: 50px;
+}
+.app .p1 {
+  line-height: 2.0;
+  padding-top:30px;
+}
+.color-org {
+  color: #ff9000;
+}
+.btn{
+  background-color: #f1f1f1;
+  padding: .5em 1.2em;
+  color: #fff;
+  border-radius: 5px;
+}
+.btn-o{
+  background-color: #7CBE2E;
+}
+.btn-g{
+  background-color: #ff9000;
+}
+.btn-dis {
+  background-color: #999999;
+}
