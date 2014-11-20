@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>开始点餐 - 企大外卖宝</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="header">
+    <div class="header-inner clearfix">
+      <img src="images/dish.png" alt="Logo" class="fl logo">
+      <span class="fl title">企大外卖宝</span>
+      <div class="countdown fr" data-diff="2400"></div>
+    </div>
+  </div>
+  <div class="app">
+    <div class="panel">
+      
+    </div>
+  </div>
+<script type="text/tmpl" id="tem-countdown">
+  <span class="txt">距离点餐结束还有：</span>
+  <span class="out" id="h1">%{m1}</span>
+  <span class="out" id="h2">%{m2}</span>
+  <span class="txt">分</span>
+  <span class="out" id="m1">%{s1}</span>
+  <span class="out" id="m2">%{s2}</span>
+  <span class="txt">秒</span>
+</script>
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.countdown.js"></script>
+<script src="js/src.js"></script>
+</body>
+</html>
