@@ -25,6 +25,9 @@ a:focus,input:focus{
 .fr {
   float: right;
 }
+.hide {
+  display: none;
+}
 .clearfix:after{
   content: '\20';
   display: block;
@@ -32,8 +35,14 @@ a:focus,input:focus{
   height: 0;
   font-size: 0;
 }
+.mgl5 {
+  margin-left: 5px;
+}
 .mgl {
   margin-left:10px;
+}
+.mgl15{
+  margin-left: 15px;
 }
 .header {
   background-color: #333;
@@ -72,6 +81,9 @@ a:focus,input:focus{
 }
 .color-org {
   color: #ff9000;
+}
+.color-gre {
+  color: #76b42d;
 }
 .btn{
   background-color: #f1f1f1;
@@ -133,4 +145,171 @@ a:focus,input:focus{
 }
 .countdown span{
   float: left;
+}
+.panel{
+  z-index: 1;
+  width: 239px;
+  height: 100%;
+  float: left;
+  position: relative;
+  background-color: #f5f5f5;
+  border-right: 1px solid #dbe5d1;
+}
+.panel .headset {
+  width: 190px;
+  height: 100px;
+  float: left;
+  font-size: 14px;
+  margin: 25px 0 0 25px;
+}
+.headset .headimg {
+  width: 80px;
+  float: left;
+  height: 80px;
+  border-radius: 50%;
+  background: url(../images/heads.jpg) no-repeat;
+  border: 1px solid #dbe5d1;
+}
+.headset .male {
+  background-position: -20px -20px;
+}
+.headset .female {
+  background-position: -96px -14px;
+}
+.headset .g1{
+  font-size: 24px;
+}
+.ppset {
+  float: left;
+  width: 180px;
+  height: 75px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 10px 0 0 25px;
+  border:1px solid #76b42d;
+}
+.ppset .f16{
+  font-size: 16px;
+}
+.ppset .t1{
+  padding: 10px 0;
+}
+.ppset .t2{
+  padding: 8px 0;
+  border-radius: 0 0 5px 5px;
+  background-color: #76b42d;
+}
+.ppset .t2 a{
+  color: #fff;
+}
+.c1 {
+  margin-left: 10px;
+}
+.g2,.g3{
+  margin-top: 8px;
+}
+.g3 a{
+  color: #76b42d;
+}
+.g3 a:hover{
+  color: #ff9900;
+}
+.ptabs{
+  top : 250px;
+  left : 12px;
+  text-align: left;
+  position: absolute;
+  z-index: 2;
+}
+.ptabs a{
+  display: block;
+  color:#505050;
+  width: 200px;
+  padding: 20px 5px 20px 20px;
+  border-bottom: 1px solid #dbe5d1;
+}
+.ptabs .active{
+  background-color: #fff;
+  border-top: 1px solid #dbe5d1;
+  border-bottom: 1px solid #dbe5d1;
+  border-left: 3px solid #76b42d;
+}
+.main {
+  float: left;
+  width: 70%;
+  margin: 10px 0 0 15px;
+}
+.main .table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.table-inter {
+  height: 430px;
+  overflow: auto;
+}
+.table thead th {
+  color: #505050;
+  font-size: 14px;
+  text-align: left;
+  font-weight: normal;
+  padding: 5px 0 5px 5px;
+  background-color: #f5f5f5;
+}
+.table td {
+  font-size: 16px;
+  padding:15px 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+.table .dish-name {
+  margin-left: 10px;
+}
+.table .con-chk{
+  float: left;
+  width: 18px;
+  height: 18px;
+  padding: 1px;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  position: relative;
+}
+.chked .fa{
+  position: absolute;
+  font-size: 1.72em;
+  top:-4px;
+  left:-2px;
+  width: 100%;
+  height: 100%;
+}
+.table .con-chkgray{
+  background-color: #f5f5f5;
+  height: 100%;
+  display: block;
+}
+.table tr.active td{
+  background-color: #fef4e1;
+}
+.pkong{
+  margin-left: 40%;
+  width: 78px;
+  height: 20px;
+  background: url(../images/kong.jpg) no-repeat;
+}
+.pkong a{
+  float: left;
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+.pkong span{
+  display: block;
+  float: left;
+  width: 35px;
+  padding: 0 1px;
+  text-align: center;
+}
+.tips {
+  margin-top: 10px;
+  text-align: right;
+  font-size: 14px;
 }
