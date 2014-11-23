@@ -80,7 +80,6 @@ $(function() {
   }
 
   // 模板渲染
-  /*
   var dataset = [
     {name:'农家一桶香饭',price:15.00,id:10},
     {name:'凉瓜肉片饭',price:10.00,id:11},
@@ -98,5 +97,4 @@ $(function() {
   _temp = _.template($('#tem-dishlist1').html());
 
   $('#data_cont1').html(_temp(dataset))
-  */
 });
