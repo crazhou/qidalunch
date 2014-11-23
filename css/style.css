@@ -199,6 +199,9 @@ a:focus,input:focus{
   border-radius: 0 0 5px 5px;
   background-color: #76b42d;
 }
+.ppset .had-star{
+  background-color: #999999;
+}
 .ppset .t2 a{
   color: #fff;
 }
