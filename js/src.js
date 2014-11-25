@@ -89,12 +89,12 @@ $(function() {
     {name:'凉瓜肉片饭',price:10.00,id:22},
     {name:'农家小炒肉饭',price:13.00,id:23},
     {name:'酸辣鸡杂饭',price:12.00,id:24},
-     {name:'农家一桶香饭',price:15.00,id:21},
+    {name:'农家一桶香饭',price:15.00,id:21},
     {name:'凉瓜肉片饭',price:10.00,id:22},
     {name:'农家小炒肉饭',price:13.00,id:23},
     {name:'酸辣鸡杂饭',price:12.00,id:24}
   ],
-  _temp = _.template($('#tem-dishlist1').html());
+  _temp = _.template($('#tem-dishlist2').html());
 
   $('#data_cont1').html(_temp(dataset))
 });

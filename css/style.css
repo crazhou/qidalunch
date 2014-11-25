@@ -69,6 +69,10 @@ a:focus,input:focus{
   text-align: center;
   font-size: 1.4em;
 }
+.app2 {
+  height: 800px;
+  margin-bottom: 20px;
+}
 .app .p0 {
   padding-top: 20px;
 }
@@ -84,6 +88,9 @@ a:focus,input:focus{
 }
 .color-gre {
   color: #76b42d;
+}
+.color-red {
+  color: #aa1020;
 }
 .btn{
   background-color: #f1f1f1;
@@ -205,11 +212,23 @@ a:focus,input:focus{
 .ppset .t2 a{
   color: #fff;
 }
+.adminset {
+  margin-top: 20px;
+  border-color:#ff9900;
+}
+.adminset .t1{
+  background: #fff;
+  padding: 10px 0;
+  border-radius: 5px 5px 0 0;
+}
+.adminset .t2 {
+  background: #ff9900;
+}
 .c1 {
   margin-left: 10px;
 }
 .g2,.g3{
-  margin-top: 8px;
+  margin-top: 5px;
 }
 .g3 a{
   color: #76b42d;
@@ -315,4 +334,7 @@ a:focus,input:focus{
   margin-top: 10px;
   text-align: right;
   font-size: 14px;
+}
+.ptabs .add-new-menu {
+  color: #76b42d;
 }
