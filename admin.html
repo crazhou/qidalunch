@@ -14,7 +14,7 @@
       <div class="countdown fr" data-diff="2400"></div>
     </div>
   </div>
-  <div class="app app2">
+  <div class="app clearfix">
     <div class="panel">
       <div class="headset">
         <div class="headimg male"></div>
@@ -24,7 +24,7 @@
           <div class="g3">
             <a href="#dianlist">点餐记录</a>
           </div>
-          <div class="g3"><a href="javascript:;">修改菜单</a></div>
+          <div class="g3"><a href="javascript:;" class="edit-menu" data-id="10">修改菜单</a></div>
         </div>
       </div>
       <div class="ppset adminset">
@@ -44,17 +44,49 @@
       <table class="table">
         <thead>
           <tr>
-            <th width="25%">菜品名称</th>
-            <th width="10%">价格</th>
-            <th width="20%">份数</th>
-            <th width="30%">选择</th>
-            <th width="10%">操作</th>
+            <th width="35%">菜品名称</th>
+            <th width="15%">价格</th>
+            <th width="25%">份数</th>
+            <th width="15%">选择</th>
+            <th>操作</th>
           </tr>
         </thead>
       </table>
-      <div class="table-inter2">
+      <div class="table-inter table-inter2">
         <table class="table" id="data_cont1"></table>
       </div>
+      <div class="tips admintips">
+        <form class="add-dish">
+            <i class="fa fa-plus-circle fa-lg color-gre"></i>
+            <input type="text" class="inp" name="dishName" id="dishName" placeholder="菜品名称" maxlength="10">
+            <input type="text" class="inp mgl15 short" name="price" id="price" placeholder="价格" maxlength="2">
+            <input type="hidden" name="menuid" value="10">
+            <input type="submit" value="确定" class="btn btn-g mgl15">
+        </form>
+        <div class="tip-btn hide">
+          <div class="tip-txt fl"></div>
+          <a href="javascript:;" class="btn btn-o">确定</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="aler_dialog hide">
+    <a href="javascript:;" class="close"><image class="fl" src="images/close.png"/></a>
+    <div class="content">
+      <form action="">
+        <div class="item">
+        <label for="a00">菜单名称</label>
+        <input type="text" id="a00" class="inp" maxlength="10" name="menuName">
+        </div>
+        <div class="item">
+        <label for="a01">联系电话</label>
+          <input type="text" id="a01" class="inp" maxlength="30" name="menuPhones">
+          <div class="label-tip">多个号码用空隔分开</div>
+        </div>
+        <div class="item">
+          <input type="submit" value="确定" class="btn btn-o">
+        </div>
+      </form>
     </div>
   </div>
 <script type="text/tmpl" id="tem-countdown">
@@ -66,30 +98,37 @@
   <span class="out" id="m2">%{s2}</span>
   <span class="txt">秒</span>
 </script>
-<script type="text/tmpl" id="tem-dishlist2">
+<script type="text/tmpl" id="tem-dishlist">
 {% _.each(obj, function(e,i,o){ %}
   <tr data-id="{{e.id}}">
-    <td width="25%"><span class="dish-name">{{-e.name}}</span></td>
-    <td width="10%">
+    <td width="35%"><span class="dish-name">{{-e.name}}</span></td>
+    <td width="15%">
       <span class="fl color-org">&yen;<span class="price">{{e.price.toFixed(2)}}</span></span>
     </td>
-    <td>
-      <div class="fl pkong mgl15 hide">
+    <td width="27%">
+      <div class="fl pkong hide">
         <a href="javascript:;" class="mus"></a>
         <span class="nums">1</span>
         <a href="javascript:;" class="add"></a>
       </div>
     </td>
-    <td width="10%">
-      <div class="con-chk mgl15">
+    <td width="15%">
+      <div class="con-chk mgl">
         <i class="con-chkgray"></i>
       </div>
     </td>
-    <td width="10%">
-    <a href="javascript:;" class="color-red">删除</a>
+    <td>
+    <a href="javascript:;" class="color-red mgl5">删除</a>
     </td>
   </tr>
 {% }) %}
+</script>
+<script type="text/tmpl" id="tem-summary">
+  您已选择：
+  {% var allpri= 0; _.each(obj, function(e,i,o){%}
+    <span class="color-org">{{-e.name}}</span>{{e.count}}份,
+  {%allpri+=e.price*e.count})%}
+  共计：<strong class="color-org">¥{{allpri}}</strong>
 </script>
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.countdown.js"></script>

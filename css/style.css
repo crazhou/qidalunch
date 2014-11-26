@@ -1,5 +1,5 @@
 @charset "utf-8";
-html,body,h1,h2,h3,ul,li,a,strong,form,input,textarea{
+html,body,h1,h2,h3,ul,li,a,div,p,strong,form,input,textarea{
   margin: 0;
   padding: 0;
 }
@@ -7,6 +7,10 @@ body{
   background-color: #76b42d;
   font-family: 'Microsoft Yahei', Arial;
   font-size: 14px;
+  position: fixed;
+  height: 100%;
+  left: 0;
+  right: 0;
 }
 a{
   text-decoration: none;
@@ -29,7 +33,7 @@ a:focus,input:focus{
   display: none;
 }
 .clearfix:after{
-  content: '\20';
+  content: '';
   display: block;
   clear: both;
   height: 0;
@@ -44,9 +48,18 @@ a:focus,input:focus{
 .mgl15{
   margin-left: 15px;
 }
+.mgl20 {
+  margin-left: 20px;
+}
+.mgl40p{
+  margin-left: 40%;
+}
 .header {
-  background-color: #333;
+  position: absolute;
+  top: 0;
+  width: 100%;
   height: 60px;
+  background-color: #333;
   box-shadow: 0 4px 8px 1px rgba(0,0,0,.3);
 }
 .header-inner {
@@ -62,24 +75,28 @@ a:focus,input:focus{
   margin: 7px 0 0 20px;
 }
 .app {
+  margin :auto;
   width: 900px;
-  margin: 20px auto 0;
-  background-color: #fff;
-  height: 550px;
+  height: 100%;
+  padding-top: 80px;
   text-align: center;
+  box-sizing: border-box;
   font-size: 1.4em;
 }
-.app2 {
-  height: 800px;
-  margin-bottom: 20px;
+.app1 {
+  width: 900px;
+  height: 500px;
+  text-align: center;
+  margin: 80px auto;
+  background-color: #fff;
 }
-.app .p0 {
+.app1 .p0 {
   padding-top: 20px;
 }
-.app .p {
+.app1 .p {
   padding-top: 50px;
 }
-.app .p1 {
+.app1 .p1 {
   line-height: 2.0;
   padding-top:30px;
 }
@@ -90,9 +107,11 @@ a:focus,input:focus{
   color: #76b42d;
 }
 .color-red {
-  color: #aa1020;
+  color: #ff0000;
 }
 .btn{
+  border:0 none;
+  cursor: pointer;
   background-color: #f1f1f1;
   padding: .5em 1.2em;
   color: #fff;
@@ -101,8 +120,14 @@ a:focus,input:focus{
 .btn-o{
   background-color: #7CBE2E;
 }
+.btn-o:hover {
+  background-color: #8cce3e;
+}
 .btn-g{
   background-color: #ff9000;
+}
+.btn-g:hover {
+  background-color: #E37E00;
 }
 .btn-dis {
   background-color: #999999;
@@ -161,6 +186,9 @@ a:focus,input:focus{
   position: relative;
   background-color: #f5f5f5;
   border-right: 1px solid #dbe5d1;
+}
+.panel a:hover {
+  text-decoration: underline;
 }
 .panel .headset {
   width: 190px;
@@ -233,9 +261,6 @@ a:focus,input:focus{
 .g3 a{
   color: #76b42d;
 }
-.g3 a:hover{
-  color: #ff9900;
-}
 .ptabs{
   top : 250px;
   left : 12px;
@@ -259,7 +284,10 @@ a:focus,input:focus{
 .main {
   float: left;
   width: 70%;
-  margin: 10px 0 0 15px;
+  height: 100%;
+  position: relative;
+  padding: 10px 10px 0;
+  background-color: #fff;
 }
 .main .table {
   width: 100%;
@@ -267,8 +295,13 @@ a:focus,input:focus{
   border-collapse: collapse;
 }
 .table-inter {
-  height: 430px;
+  height: 75%;
+  height: calc(100% - 100px);
   overflow: auto;
+  border-bottom: 2px solid #eee;
+}
+.table-inter2 {
+  height: calc(100% - 120px);
 }
 .table thead th {
   color: #505050;
@@ -312,7 +345,6 @@ a:focus,input:focus{
   background-color: #fef4e1;
 }
 .pkong{
-  margin-left: 40%;
   width: 78px;
   height: 20px;
   background: url(../images/kong.jpg) no-repeat;
@@ -331,10 +363,84 @@ a:focus,input:focus{
   text-align: center;
 }
 .tips {
-  margin-top: 10px;
+  position: absolute;
+  bottom: 5px;
+  right: 0;
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  box-sizing : border-box;
   text-align: right;
   font-size: 14px;
 }
+.tip-txt{
+  max-width: 80%;
+}
+.tip-btn{
+  margin-top: 5px;
+  overflow: hidden;
+}
+.tip-btn .btn{
+  float: right;
+}
 .ptabs .add-new-menu {
   color: #76b42d;
+}
+.admintips {
+  text-align: left;
+  height: 90px;
+}
+.admintips .tip-btn {
+  margin-top: 40px;
+}
+.add-dish {
+  position: absolute;
+  left: 10px;
+  top: 5px;
+  margin-top: 5px;
+}
+.admintips .inp {
+  width: 160px;
+}
+.admintips .short{
+  width: 60px;
+}
+.aler_dialog {
+  width: 400px;
+  height: 200px;
+  top : 25%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  position: fixed;
+  background-color: #fff;
+  border-radius: 10px;
+  z-index: 10;
+  border: 1px solid #eee;
+  box-shadow: 0 0 8px 1px rgba(0,0,0,.3);
+}
+.aler_dialog .close {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  transition : transform .3s ease-in-out;
+}
+.aler_dialog .close:hover {
+  transform : rotate(180deg);
+}
+.aler_dialog .content {
+  padding: 20px 10px 0;
+}
+.content .item {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.content label{
+  color: #333;
+}
+.content .inp {
+  margin-left: 10px;
+}
+.content .label-tip {
+  color: #999;
 }

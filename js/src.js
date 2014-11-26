@@ -4,6 +4,22 @@ $(function() {
     evaluate : /\{%([\s\S]+?)%\}/g,
     escape: /\{\{-([\s\S]+?)\}\}/g,
   }
+
+    // 显示弹出层
+  var alertDialog = function (j) {
+    this.open = function() {
+      j.removeClass('hide')
+    }
+    this.init(j);  
+  }
+
+  _.extend(alertDialog.prototype, {
+    init : function(j) {
+      j.on('click', '.close', function(e){
+        j.addClass('hide');
+      });
+    }
+  })
   // 倒计时代码
   $('.countdown').countdown({
     tmpl : $('#tem-countdown').html()
@@ -52,12 +68,18 @@ $(function() {
       UpdateText();
   })
 
+  var dialog = new alertDialog($('.aler_dialog'));
+  // 增加菜单
+  $('.app').on('click', '.add-new-menu,.edit-menu', function(e) {
+      dialog.open();
+  });
+
   // 更新文字 
   function UpdateText() {
     var cont = $('#data_cont1'),
         selData = [],
         trs = cont.find('tr.active'),
-        tips = $('.tips'),
+        tips = $('.tips .tip-btn'),
         _temp = _.template($('#tem-summary').html()),
         tiptxt= $('.tip-txt');
       if(trs.size()>0) {
@@ -79,6 +101,8 @@ $(function() {
       }
   }
 
+
+
   // 模板渲染
   var dataset = [
     {name:'农家一桶香饭',price:15.00,id:10},
@@ -94,7 +118,7 @@ $(function() {
     {name:'农家小炒肉饭',price:13.00,id:23},
     {name:'酸辣鸡杂饭',price:12.00,id:24}
   ],
-  _temp = _.template($('#tem-dishlist2').html());
+  _temp = _.template($('#tem-dishlist').html());
 
   $('#data_cont1').html(_temp(dataset))
 });

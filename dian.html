@@ -14,7 +14,7 @@
       <div class="countdown fr" data-diff="2400"></div>
     </div>
   </div>
-  <div class="app">
+  <div class="app clearfix">
     <div class="panel">
       <div class="headset">
         <div class="headimg male"></div>
@@ -42,19 +42,20 @@
       <table class="table">
         <thead>
           <tr>
-          <th width="45%">菜品名称</th>
-          <th width="45%">价格</th>
-          <th width="10%">选择</th>
+          <th width="44%">菜品名称</th>
+          <th width="42%">价格</th>
+          <th>选择</th>
           </tr>
         </thead>
       </table>
       <div class="table-inter">
         <table class="table" id="data_cont1"></table>
       </div>
-      <div class="tips hide">
-        <div class="tip-txt"></div>
-        <br>
-        <a href="javascript:;" class="btn btn-o">确定</a>
+      <div class="tips">
+        <div class="tip-btn hide">
+          <div class="tip-txt fl"></div>
+          <a href="javascript:;" class="btn btn-o">确定</a>
+        </div>
       </div>
     </div>
   </div>
@@ -67,20 +68,20 @@
   <span class="out" id="m2">%{s2}</span>
   <span class="txt">秒</span>
 </script>
-<script type="text/tmpl" id="tem-dishlist1">
+<script type="text/tmpl" id="tem-dishlist">
 {% _.each(obj, function(e,i,o){ %}
   <tr data-id="{{e.id}}">
     <td width="45%"><span class="dish-name">{{-e.name}}</span></td>
     <td width="45%">
-      <span class="fl color-org mgl15">&yen;<span class="price">{{e.price.toFixed(2)}}</span></span>
-      <div class="fl pkong mgl15 hide">
+      <span class="fl color-org">&yen;<span class="price">{{e.price.toFixed(2)}}</span></span>
+      <div class="fl pkong mgl40p hide">
         <a href="javascript:;" class="mus"></a>
         <span class="nums">1</span>
         <a href="javascript:;" class="add"></a>
       </div>
     </td>
     <td width="10%">
-      <div class="con-chk mgl15">
+      <div class="con-chk">
         <i class="con-chkgray"></i>
       </div>
     </td>
