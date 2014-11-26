@@ -16,12 +16,10 @@ a{
   text-decoration: none;
   color:#08c;
 }
-input{
+a,input,select{
+  outline: none;
   font-size: inherit;
   font-family: inherit;
-}
-a:focus,input:focus{
-  outline: none;
 }
 .fl {
   float: left;
@@ -53,6 +51,9 @@ a:focus,input:focus{
 }
 .mgl40p{
   margin-left: 40%;
+}
+.mgt20 {
+  margin-top: 20px;
 }
 .header {
   position: absolute;
@@ -132,13 +133,18 @@ a:focus,input:focus{
 .btn-dis {
   background-color: #999999;
 }
+.sel {
+  border: 2px solid #e0e0e0;
+  color: #a0a0a0;
+  padding: 4px 5px;
+}
 .inp {
   padding: 5px;
   width: 50%;
   border: 2px solid #e0e0e0;
   color: #a0a0a0;
 }
-.inp:focus{
+.inp:focus,.sel:focus{
   border: 2px solid #fcbe2e;
 }
 .line {
@@ -193,7 +199,6 @@ a:focus,input:focus{
 .panel .headset {
   width: 190px;
   height: 100px;
-  float: left;
   font-size: 14px;
   margin: 25px 0 0 25px;
 }
@@ -215,7 +220,6 @@ a:focus,input:focus{
   font-size: 24px;
 }
 .ppset {
-  float: left;
   width: 180px;
   height: 75px;
   border-radius: 5px;
@@ -294,6 +298,9 @@ a:focus,input:focus{
   text-align: left;
   border-collapse: collapse;
 }
+.table tr:hover td{
+  background-color: #f0f0f0;
+}
 .table-inter {
   height: 75%;
   height: calc(100% - 100px);
@@ -315,9 +322,6 @@ a:focus,input:focus{
   font-size: 16px;
   padding:15px 0;
   border-bottom: 1px solid #f1f1f1;
-}
-.table .dish-name {
-  margin-left: 10px;
 }
 .table .con-chk{
   float: left;
@@ -399,15 +403,14 @@ a:focus,input:focus{
   top: 5px;
   margin-top: 5px;
 }
-.admintips .inp {
+.add-dish .inp {
   width: 160px;
 }
-.admintips .short{
+.main .short{
   width: 60px;
 }
 .aler_dialog {
   width: 400px;
-  height: 200px;
   top : 25%;
   left: 0;
   right: 0;
@@ -429,11 +432,14 @@ a:focus,input:focus{
   transform : rotate(180deg);
 }
 .aler_dialog .content {
-  padding: 20px 10px 0;
+  padding: 20px 10px;
 }
 .content .item {
   text-align: center;
   margin-bottom: 10px;
+}
+.confirm .item {
+  margin-top: 30px;
 }
 .content label{
   color: #333;
@@ -443,4 +449,23 @@ a:focus,input:focus{
 }
 .content .label-tip {
   color: #999;
+}
+.confirm{
+  text-align: center;
+  font-size: 18px;
+}
+.u-radio {
+  width: 90px;
+  overflow: hidden;
+  margin-left: 15px;
+}
+.u-radio .radio {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url(../images/radio.png) no-repeat -18px 0;
+  vertical-align: -3px;
+}
+.u-radio .chked {
+  background-position: 0 0;
 }
