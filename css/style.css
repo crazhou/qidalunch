@@ -52,6 +52,9 @@ a,input,select{
 .mgl40p{
   margin-left: 40%;
 }
+.mgt10 {
+  margin-top: 10px;
+}
 .mgt20 {
   margin-top: 20px;
 }
@@ -293,6 +296,14 @@ a,input,select{
   padding: 10px 10px 0;
   background-color: #fff;
 }
+.main .title {
+  text-align: left;
+  font-size: 14px;
+  color : #505050;
+  line-height: 1;
+  padding-left: 10px;
+  border-left: 3px solid #76b42d;
+}
 .main .table {
   width: 100%;
   text-align: left;
@@ -468,4 +479,27 @@ a,input,select{
 }
 .u-radio .chked {
   background-position: 0 0;
+}
+.dian-cont {
+  margin-top: 10px;
+  text-align: left;
+}
+.dian-header{
+  overflow: hidden;
+  border-top: 1px solid #dbe5d1;
+  padding-top: 20px;
+}
+.tb2{
+  border-collapse: collapse;
+  margin-top: 5px;
+  border-top: 1px solid #f1f1f1;
+  font-size: 14px;
+  width: 100%;
+}
+.tb2 td {
+  background-color: #fff;
+  padding:10px 5px;
+}
+.tb2 .even td{
+  background-color: #eeeeee;
 }
