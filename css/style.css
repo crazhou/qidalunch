@@ -7,6 +7,8 @@ body{
   background-color: #76b42d;
   font-family: 'Microsoft Yahei', Arial;
   font-size: 14px;
+}
+.fix {
   position: fixed;
   height: 100%;
   left: 0;
@@ -79,7 +81,7 @@ a,input,select{
   margin: 7px 0 0 20px;
 }
 .app {
-  margin :auto;
+  margin :0 auto 40px;
   width: 900px;
   height: 100%;
   padding-top: 80px;
@@ -309,6 +311,11 @@ a,input,select{
   text-align: left;
   border-collapse: collapse;
 }
+.main .sp-scroll {
+  overflow: auto;
+  padding-bottom: 20px;
+  height: calc(100% - 20px);
+}
 .table tr:hover td{
   background-color: #f0f0f0;
 }
@@ -482,6 +489,7 @@ a,input,select{
 }
 .dian-cont {
   margin-top: 10px;
+  padding-bottom: 10px;
   text-align: left;
 }
 .dian-header{
@@ -502,4 +510,7 @@ a,input,select{
 }
 .tb2 .even td{
   background-color: #eeeeee;
+}
+.zon{
+  margin-top: 5px;
 }
