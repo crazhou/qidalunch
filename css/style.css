@@ -7,6 +7,8 @@ body{
   background-color: #76b42d;
   font-family: 'Microsoft Yahei', Arial;
   font-size: 14px;
+}
+.fix {
   position: fixed;
   height: 100%;
   left: 0;
@@ -52,6 +54,9 @@ a,input,select{
 .mgl40p{
   margin-left: 40%;
 }
+.mgt10 {
+  margin-top: 10px;
+}
 .mgt20 {
   margin-top: 20px;
 }
@@ -76,7 +81,7 @@ a,input,select{
   margin: 7px 0 0 20px;
 }
 .app {
-  margin :auto;
+  margin :0 auto 40px;
   width: 900px;
   height: 100%;
   padding-top: 80px;
@@ -293,10 +298,23 @@ a,input,select{
   padding: 10px 10px 0;
   background-color: #fff;
 }
+.main .title {
+  text-align: left;
+  font-size: 14px;
+  color : #505050;
+  line-height: 1;
+  padding-left: 10px;
+  border-left: 3px solid #76b42d;
+}
 .main .table {
   width: 100%;
   text-align: left;
   border-collapse: collapse;
+}
+.main .sp-scroll {
+  overflow: auto;
+  padding-bottom: 20px;
+  height: calc(100% - 20px);
 }
 .table tr:hover td{
   background-color: #f0f0f0;
@@ -468,4 +486,31 @@ a,input,select{
 }
 .u-radio .chked {
   background-position: 0 0;
+}
+.dian-cont {
+  margin-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+}
+.dian-header{
+  overflow: hidden;
+  border-top: 1px solid #dbe5d1;
+  padding-top: 20px;
+}
+.tb2{
+  border-collapse: collapse;
+  margin-top: 5px;
+  border-top: 1px solid #f1f1f1;
+  font-size: 14px;
+  width: 100%;
+}
+.tb2 td {
+  background-color: #fff;
+  padding:10px 5px;
+}
+.tb2 .even td{
+  background-color: #eeeeee;
+}
+.zon{
+  margin-top: 5px;
 }
