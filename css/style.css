@@ -115,6 +115,9 @@ a,input,select{
 .color-red {
   color: #ff0000;
 }
+.color-bla {
+  color: #333;
+}
 .btn{
   border:0 none;
   cursor: pointer;
@@ -520,4 +523,11 @@ a,input,select{
 }
 .zon{
   margin-top: 5px;
+}
+.history td {
+  font-size: 14px;
+  color: #999;
+}
+.history .today td{
+  color: #000;
 }
