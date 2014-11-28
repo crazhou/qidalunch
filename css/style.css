@@ -54,6 +54,9 @@ a,input,select{
 .mgl40p{
   margin-left: 40%;
 }
+.mgr10 {
+  margin-right: 10px
+}
 .mgt10 {
   margin-top: 10px;
 }
@@ -324,7 +327,8 @@ a,input,select{
 .main .sp-scroll {
   overflow: auto;
   padding-bottom: 20px;
-  height: calc(100% - 20px);
+  height: 88%;
+  height: calc(100% - 30px);
 }
 .table tr:hover td{
   background-color: #f0f0f0;
