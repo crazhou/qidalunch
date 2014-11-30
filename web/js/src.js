@@ -2,7 +2,7 @@ $(function() {
   _.templateSettings = {
     interpolate: /\{\{([\s\S]+?)\}\}/g,
     evaluate : /\{%([\s\S]+?)%\}/g,
-    escape: /\{\{-([\s\S]+?)\}\}/g,
+    escape: /\{\{-([\s\S]+?)\}\}/g
   }
 
     // 显示弹出层
@@ -22,7 +22,10 @@ $(function() {
   })
   // 倒计时代码
   $('.countdown').countdown({
-    tmpl : $('#tem-countdown').html()
+    tmpl : $('#tem-countdown').html(),
+    afterEnd : function(q) {
+        q.html('<span class="txt">不在点餐时间段</span>')
+    }
   })
 
   // 自定义Checkbox
@@ -48,7 +51,7 @@ $(function() {
   });
 
   // 加减控件
-  $('.table').on('click', '.pkong', function(e){
+  $('.table').on('click', '.pkong', function(e) {
     var t = $(e.target),
         numcont = $(this).find('span'),
         num = +numcont.html();
@@ -101,24 +104,38 @@ $(function() {
       }
   }
 
+    $('.ptabs').on('click', 'a', function(e) {
+        var t = $(this),
+            id = t.data('menuid');
+        t.addClass('active').siblings().removeClass('active');
 
+        getDishList(id);
+    });
 
   // 模板渲染
-  var dataset = [
-    {name:'农家一桶香饭',price:15.00,id:10},
-    {name:'凉瓜肉片饭',price:10.00,id:11},
-    {name:'农家小炒肉饭',price:13.50,id:12},
-    {name:'酸辣鸡杂饭',price:12.00,id:14},
-    {name:'农家一桶香饭',price:15.00,id:21},
-    {name:'凉瓜肉片饭',price:10.00,id:22},
-    {name:'农家小炒肉饭',price:13.00,id:23},
-    {name:'酸辣鸡杂饭',price:12.00,id:24},
-    {name:'农家一桶香饭',price:15.00,id:21},
-    {name:'凉瓜肉片饭',price:10.00,id:22},
-    {name:'农家小炒肉饭',price:13.00,id:23},
-    {name:'酸辣鸡杂饭',price:12.00,id:24}
-  ],
-  _temp = _.template($('#tem-dishlist').html());
+    function getDishList(id) {
+        var _temp = _.template($('#tem-dishlist').html()),
+            data_cont = $('#data_cont1'),
+            url = '/dish/list';
+        $.ajax(url, {
+            type : 'GET',
+            dataType : 'json',
+            data : {id:id},
+            cache : false,
+            timeout : 2000,
+            success : function(resp) {
+                if(!resp.ret) {
+                    data_cont.html(_temp(resp.dataset));
+                } else {
+                    alert(resp.errorMsg);
+                }
+            }
+        })
+    }
+    var activeEl = $('.ptabs').find('.active');
 
-  $('#data_cont1').html(_temp(dataset))
+    if(activeEl.size() > 0) {
+        var id = activeEl.data('menuid');
+        getDishList(id);
+    }
 });

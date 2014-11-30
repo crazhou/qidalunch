@@ -6,7 +6,7 @@ use Yii;
 use app\models\Ye;
 use yii\web\Controller;
 use app\models\User;
-use app\models\Dish;
+use app\models\Menu;
 
 class EntryController extends Controller
 {
@@ -15,6 +15,15 @@ class EntryController extends Controller
     public function init()
     {
         $this->countdown = Ye::getCountdown();
+        $sess = Yii::$app->session;
+        $cache = Yii::$app->cache;
+        if($sess->has('current_user') AND $cache->exists('admin_user')) {
+            if($sess->get('current_user')->getAttribute('id') === $cache->get('admin_user')) {
+                $this->redirect('user/admin');
+            } else {
+                $this->redirect('user/dian');
+            }
+        }
     }
     /*
      * 用户统欢迎页
@@ -44,21 +53,45 @@ class EntryController extends Controller
         if(!is_null($user)) {
             return $this->render('index',$data);
         } else {
-            return $this->render('empty', $data);
+            $data['error'] = '找到不指定用户';
+            return $this->render('error', $data);
         }
     }
 
-    public function actionChooseMenu() {
-
+    public function actionChooseMenu($id)
+    {
+        $sess = Yii::$app->session;
+        $cache = Yii::$app->cache;
         $data= [
             'hasCount' => FALSE,
             'countdown' => $this->countdown,
-            'menus' => Dish::find()->orderBy('updated_at desc')->all(),
+            'menus' => Menu::find()->orderBy('updated_at desc')->all(),
         ];
+
+        // 设置管理员和当前用户
+        $user = User::findByUsername($id);
+        // 设置当前用户
+        $sess->set('current_user', $user);
+        // 设置管理员
+        $cache->set('admin_user', $user->getAttribute('id'), 3600);
+        $cache->set('admin_name', $user->getAttribute('user_name'), 3600);
+
         return $this->render('choosemenu', $data);
     }
 
-    public function actionError() {
-        return '发生了一个错误！';
+    public function actionClear()
+    {
+        Yii::$app->cache->flush();
+        return '缓存清除成功！';
+    }
+
+    public function actionError()
+    {
+        $data = [
+            'hasCount' => FALSE,
+            'error' => '发生了一个错误'
+        ];
+
+        return $this->render('error', $data);
     }
 }

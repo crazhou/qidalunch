@@ -1,26 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>管理员 - 企大外卖宝</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-</head>
-<body class="fix">
-  <div class="header">
-    <div class="header-inner clearfix">
-      <img src="images/dish.png" alt="Logo" class="fl logo">
-      <span class="fl title">企大外卖宝</span>
-      <div class="countdown fr" data-diff="2400"></div>
-    </div>
-  </div>
+<?php
+use yii\helpers\Url;
+$this->title = '管理员';
+$params = &Yii::$app->params;
+$params['hasCount'] = $hasCount;
+$params['fixed'] = $fixed;
+$params['script'] = 'src';
+$params['countdown'] = $countdown;
+?>
   <div class="app">
     <div class="panel">
       <div class="headset">
-        <div class="headimg male"></div>
+        <div class="headimg <?=$user->user_sex==='f'?'female':'male'?>"></div>
         <div class="fl c1">
-          <div class="g1">周华辉</div>
-          <div class="g2">被赞<span class="color-org">666</span>次</div>
+          <div class="g1"><?=$user->user_name?></div>
+          <div class="g2">被赞 <span class="color-org"><?=$user->user_praise?></span> 次</div>
           <div class="g3">
             <a href="../entry/history.html">点餐记录</a>
           </div>
@@ -28,16 +21,16 @@
         </div>
       </div>
       <div class="ppset adminset">
-        <div class="t1">今日我值班: <a href="../entry/users.html" class="color-org f16">用户管理</a></div>
+        <div class="t1">今日我值班: <a href="/user/list" class="color-org f16">用户管理</a></div>
         <div class="t2">
-          <a href="../entry/total.html">查看今日点餐</a><strong class="count">9+</strong>
+          <a href="../entry/total.html">查看今日点餐</a><strong class="count">0</strong>
         </div>
       </div>
       <div class="ptabs">
-        <a href="javascript:;" class="active" data-menuid="10">A菜单（饭饭之辈）</a>
-        <a href="javascript:;" data-menuid="10">B菜单（赣湘木桶饭）</a>
-        <a href="javascript:;" data-menuid="10">C菜单（鲜粉人家）</a>
-        <a href="javascript:;" data-menuid="10" class="add-new-menu"><i class="fa fa-plus-circle"></i> 增加菜单</a>
+      <?php foreach($menus as $k=>$v):?>
+        <a href="javascript:;" <?=empty($k)?'class="active"':''?> data-menuid="<?=$v->id;?>"><?=$v->menu_name?></a>
+      <?php endforeach;?>
+        <a href="javascript:;" class="add-new-menu"><i class="fa fa-plus-circle"></i> 增加菜单</a>
       </div>
     </div>
     <div class="main">
@@ -76,7 +69,7 @@
     </div>
   </div>
   <div class="aler_dialog hide">
-    <a href="javascript:;" class="close"><image class="fl" src="images/close.png"/></a>
+    <a href="javascript:;" class="close"><image class="fl" src="/images/close.png"/></a>
     <div class="content">
       <form action="">
         <div class="item">
@@ -106,9 +99,9 @@
 <script type="text/tmpl" id="tem-dishlist">
 {% _.each(obj, function(e,i,o){ %}
   <tr data-id="{{e.id}}">
-    <td width="35%"><span class="mgl dish-name">{{-e.name}}</span></td>
+    <td width="35%"><span class="mgl dish-name">{{-e.dish_name}}</span></td>
     <td width="15%">
-      <span class="fl color-org">&yen;<span class="price">{{e.price.toFixed(2)}}</span></span>
+      <span class="fl color-org">&yen;<span class="price">{{e.dish_price.toFixed(2)}}</span></span>
     </td>
     <td width="27%">
       <div class="fl pkong hide">
@@ -135,9 +128,8 @@
   {%allpri+=e.price*e.count})%}
   共计：<strong class="color-org">¥{{allpri}}</strong>
 </script>
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.countdown.js"></script>
-<script src="http://cdn.staticfile.org/underscore.js/1.7.0/underscore-min.js"></script>
-<script src="js/src.js"></script>
-</body>
-</html>
+<script>
+    var pageVar = {
+        isAdmin : true
+    };
+</script>

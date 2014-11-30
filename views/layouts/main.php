@@ -14,24 +14,27 @@ $params = Yii::$app->params;
     <link rel="stylesheet" href="/css/font-awesome.min.css">
 <?php $this->head()?>
 </head>
-<body>
+<body<?=isset($params['fixed']) ? ' class="fix"':''?>>
 <?php $this->beginBody()?>
 <div class="header">
     <div class="header-inner clearfix">
         <img src="/images/dish.png" alt="Logo" class="fl logo">
         <span class="fl title"><?= $app_name?></span>
-        <?php if($params['hasCount']): ?>
-            <div class="countdown fr" data-diff="2400"></div>
-        <?php endif;?>
+        <?php if($params['hasCount']) { ?>
+            <div class="countdown fr" data-diff="<?=$params['countdown']?>"></div>
+        <?php }?>
     </div>
 </div>
 <?= $content?>
 <?php $this->endBody()?>
-<script src="/js/jquery.min.js"></script>
-<?php if($params['hasCount']): ?>
-<script src="/js/jquery.countdown.js"></script>
+<?php if(isset($params['script'])): ?>
+    <script src="//apps.bdimg.com/libs/jquery/1.10.1/jquery.min.js"></script>
+    <?php if($params['hasCount']): ?>
+    <script src="/js/jquery.countdown.js"></script>
+    <script src="//apps.bdimg.com/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <?php endif;?>
+    <script src="/js/<?=$params['script']?>.js"></script>
 <?php endif;?>
-<script src="/js/entry.js"></script>
 </body>
 </html>
 <?php $this->endPage() ?>

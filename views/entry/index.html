@@ -1,7 +1,9 @@
 <?php
-    $this->title = '欢迎页';
+    $this->title = $user->user_name;
+    $cache = Yii::$app->cache;
     $params = &Yii::$app->params;
     $params['hasCount'] = $hasCount;
+    $params['script'] = 'entry';
 ?>
 <div class="app1">
     <div class="p">
@@ -12,12 +14,15 @@
       点餐截止时间: <span class="color-org"><?= $params['endTime']?></span>
     </div>
     <div class="p">
-        <?php if($countdown < 0): ?>
-        <a href="javascript:;" class="btn btn-dis">我要值班</a>
-        <a href="javascript:;" class="btn btn-dis mgl">开始点餐</a>
-        <?php else: ?>
-        <a href="/user/dian/<?=$user->user_spell?>" class="btn btn-g" data-role="admin">我要值班</a>
-        <a href="/user/admin/<?=$user->user_spell?>" class="btn btn-o mgl" data-role="dian">开始点餐</a>
+        <?php if($countdown > 0 AND ! $cache->exists('admin_user')): ?>
+            <a href="/entry/choose-menu?id=<?=$user->user_spell?>" class="btn btn-g" data-role="admin">我来值班</a>
+        <?php else:?>
+            <a href="javascript:;" class="btn btn-dis">我来值班</a>
+        <?php endif;?>
+        <?php if($cache->exists('menu_ids') AND $countdown > 0):?>
+            <a href="/user/dian/<?=$user->user_spell?>" class="btn btn-o mgl" data-role="dian">开始点餐</a>
+        <?php else:?>
+            <a href="javascript:;" class="btn btn-dis mgl">开始点餐</a>
         <?php endif;?>
     </div>
 </div>

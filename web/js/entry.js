@@ -9,7 +9,7 @@ $(function() {
         avali.push(value);
     });
     // 事件绑定
-    $('.needInput').on('click', '.btn', function(){
+    $('.needInput').on('click', '.btn:not(.btn-dis)', function(){
         var v = $.trim(short.val()),
             role = $(this).data('role');
 
@@ -18,7 +18,11 @@ $(function() {
             short.trigger('focus');
         } else {
             if($.inArray(v, avali) > -1) {
-                location.href="/user/index/"+v + '/' + role;
+                if(role ==='admin') {
+                    location.href = '/entry/choose-menu?id=' + v;
+                } else {
+                    location.href = '/user/dian?short=' + v;
+                }
             } else {
                 alert('请输入正确的姓名简拼')
                 short.trigger('focus');
@@ -44,7 +48,7 @@ $(function() {
             lis.each(function(i,e){
                 q.push($(e).data('id'));
             });
-            location.href = 'user/admin?menuid='+ q.join(',');
+            location.href = '/user/admin?menuid='+ q.join(',');
         } else {
             alert('请选择今日菜单!');
         }

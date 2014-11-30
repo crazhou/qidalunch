@@ -68,12 +68,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		// main
 		return this.each(function() {
 			var el = this,
+                attr = $(el).attr(options.attrName),
 				diff = getDiffTime($(el).attr(options.attrName));
 			function update() {
 				if (diff <= 0) {
 					$(el).html(options.end);
 					if (options.afterEnd) {
-						options.afterEnd();
+						options.afterEnd($(el));
 					}
 					return;
 				}

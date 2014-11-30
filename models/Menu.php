@@ -4,12 +4,11 @@ namespace app\models;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
 
-class Dish extends ActiveRecord {
-
+class Menu extends ActiveRecord {
 
     public static function tableName()
     {
-        return '{{%dish}}';
+        return '{{%dish_menu}}';
     }
 
     public function behaviors()

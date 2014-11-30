@@ -22,6 +22,5 @@ class Ye extends Object {
         } else {
             return -1;
         }
-
     }
 }
