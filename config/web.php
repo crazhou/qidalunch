@@ -1,12 +1,26 @@
 <?php
-
 $params = require(__DIR__ . '/params.php');
-
 $config = [
-    'id' => 'basic',
+    'id' => 'waimaibao',
+    'name' => '企大外卖宝',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'layout' => 'main', // 是否使用Layout 文件
+    'layoutPath' => '@app/views/layouts',//  layout 文件目录
+    'defaultRoute' => 'entry',
+    'charset' => 'utf-8',
     'components' => [
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => true,
+            'rules' => [
+                'entry/<short:\w{2,3}>' => 'entry/u',
+                'user/<action:(dian|admin)>/<short:\w+>' => 'user/<action>'
+            ]
+        ],
+        'view' => [
+          'defaultExtension' => 'html'
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'pDh2RlplgiNko4ebJNlbUYYK69bqMzKd',
@@ -19,7 +33,7 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'entry/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',

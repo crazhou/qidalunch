@@ -142,6 +142,7 @@ a,input,select{
   background-color: #E37E00;
 }
 .btn-dis {
+  cursor: default;
   background-color: #999999;
 }
 .sel {

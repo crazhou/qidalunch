@@ -1,0 +1,23 @@
+<?php
+    $this->title = '欢迎页';
+    $params = &Yii::$app->params;
+    $params['hasCount'] = $hasCount;
+?>
+<div class="app1">
+    <div class="p">
+      <img src="/images/bigdish.jpg" alt="Logo">
+    </div>
+    <div class="p1">
+      <span class="color-org"><?=$user->user_name?></span>, 欢迎进入点餐系统<br>
+      点餐截止时间: <span class="color-org"><?= $params['endTime']?></span>
+    </div>
+    <div class="p">
+        <?php if($countdown < 0): ?>
+        <a href="javascript:;" class="btn btn-dis">我要值班</a>
+        <a href="javascript:;" class="btn btn-dis mgl">开始点餐</a>
+        <?php else: ?>
+        <a href="/user/dian/<?=$user->user_spell?>" class="btn btn-g" data-role="admin">我要值班</a>
+        <a href="/user/admin/<?=$user->user_spell?>" class="btn btn-o mgl" data-role="dian">开始点餐</a>
+        <?php endif;?>
+    </div>
+</div>

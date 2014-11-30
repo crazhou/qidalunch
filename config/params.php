@@ -1,5 +1,5 @@
 <?php
-
 return [
-    'adminEmail' => 'admin@example.com',
+    'startTime' => '9:00',
+    'endTime' => '19:50',
 ];

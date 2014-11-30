@@ -1,0 +1,19 @@
+<?php
+$this->title = '选择菜单';
+$params = &Yii::$app->params;
+$params['hasCount'] = $hasCount;
+?>
+<div class="app1">
+    <div class="p0">
+      <img src="/images/bigdish.jpg" alt="Logo">
+    </div>
+    <div class="p0"> 请选定今日菜单!</div>
+    <div class="menu-list p1">
+        <?php foreach($menus as $v):?>
+        <a href="javascript:;" data-id="<?=$v->id?>" class="menu-item"><?=$v->menu_name?></a>
+        <?php endforeach;?>
+    </div>
+    <div class="p1 line">
+      <a href="javascript:;" class="btn btn-g" id="entry">确定</a>
+    </div>
+</div>

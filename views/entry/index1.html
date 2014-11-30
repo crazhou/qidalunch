@@ -1,0 +1,31 @@
+<?php
+    $this->title = '欢迎页';
+    $params  = &Yii::$app->params;
+    $params['hasCount'] = $hasCount;
+?>
+<div class="app1">
+    <div class="p">
+      <img src="/images/bigdish.jpg" alt="Logo">
+    </div>
+    <div class="p1">
+      <input type="text" placeholder="您的姓名首字母，例如：李明，则输入lm" class="inp" list="cusList" id="short"><br>
+      欢迎进入点餐系统<br>
+      点餐截止时间: <span class="color-org"><?= $params['endTime']?></span>
+    </div>
+    <div class="p needInput">
+        <?php if($countdown < 0): ?>
+            <a href="javascript:;" class="btn btn-dis" data-role="admin">我要值班</a>
+            <a href="javascript:;" class="btn btn-dis mgl" data-role="dian">开始点餐</a>
+        <?php else: ?>
+            <a href="javascript:;" class="btn btn-g" data-role="admin">我要值班</a>
+            <a href="javascript:;" class="btn btn-o mgl" data-role="dian">开始点餐</a>
+        <?php endif;?>
+    </div>
+  </div>
+  <datalist id="cusList">
+      <?php
+        foreach($users as $k=>$v) {
+            printf('<option value="%s" label="%s"/>', $v->user_spell, $v->user_name);
+        }
+      ?>
+  </datalist>
