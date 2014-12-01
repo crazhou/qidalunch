@@ -16,7 +16,8 @@ $config = [
             'enableStrictParsing' => false,
             'rules' => [
                 'entry/<short:\w{2,3}>' => 'entry/u',
-                'user/<action:(dian|admin)>/<short:\w+>' => 'user/<action>'
+                'user/<action:(dian|admin)>/<short:\w+>' => 'user/<action>',
+                'clear' => 'entry/clear',
             ]
         ],
         'view' => [

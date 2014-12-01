@@ -32,6 +32,9 @@ a,input,select{
 .hide {
   display: none;
 }
+.alc {
+    text-align: center;
+}
 .clearfix:after{
   content: '';
   display: block;

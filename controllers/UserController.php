@@ -9,7 +9,6 @@ use app\models\Ye;
 
 class UserController extends Controller
 {
-
     private $countdown = 0;
 
     public function init()

@@ -104,12 +104,13 @@ $(function() {
       }
   }
 
-    $('.ptabs').on('click', 'a', function(e) {
+    $('.ptabs').on('click', 'a:not(.add-new-menu)', function(e) {
         var t = $(this),
             id = t.data('menuid');
         t.addClass('active').siblings().removeClass('active');
 
         getDishList(id);
+        $('input[name=menuid]').val(id);
     });
 
   // 模板渲染
@@ -133,9 +134,49 @@ $(function() {
         })
     }
     var activeEl = $('.ptabs').find('.active');
-
     if(activeEl.size() > 0) {
         var id = activeEl.data('menuid');
         getDishList(id);
+    }
+
+    if(pageVar.isAdmin) {
+        var form = $('.add-dish').on('submit', function(e) {
+            e.preventDefault();
+            var data = form.serializeArray(),
+                post_data = {}
+            $.each(data, function(i,e) {
+                if(e.value !== '') {
+                    if(e.name === 'price') {
+                        if(/^\d{1,2}$/.test(e.value)) {
+                            post_data[e.name] = e.value;
+                        } else {
+                            alert('价格必需为数字！');
+                        }
+                    } else {
+                        post_data[e.name] = e.value;
+                    }
+                } else {
+                    alert('还有字段没有填写！');
+                    return false;
+                }
+            });
+
+            if(_.size(post_data) === 4) {
+                var url = '/dish/adddish';
+
+                $.ajax(url, {
+                    type : 'GET',
+                    dataType : 'json',
+                    data : post_data,
+                    cache : false,
+                    timeout : 2000,
+                    success : function(resp) {
+
+                    }
+                });
+            } else {
+                alert('输入不完整，请检查!');
+            }
+        });
     }
 });

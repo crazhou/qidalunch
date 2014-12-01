@@ -49,16 +49,16 @@ $params['countdown'] = $countdown;
         <table class="table" id="data_cont1"></table>
       </div>
       <div class="tips admintips">
-        <form class="add-dish">
+        <form class="add-dish" autocomplete="off">
             <i class="fa fa-plus-circle fa-lg color-gre"></i>
-            <input type="text" class="inp" name="dishName" id="dishName" placeholder="菜品名称" maxlength="10">
-            <input type="text" class="inp mgl15 short" name="price" id="price" placeholder="价格" maxlength="2">
+            <input type="text" class="inp" name="dishName" id="dishName" placeholder="菜品名称" maxlength="10" required autofocus>
+            <input type="text" class="inp mgl15 short" name="price" id="price" placeholder="价格" maxlength="2" required>
             <select name="openOn" id="openon" class="sel mgl15">
-              <option value="">开放时间</option>
-              <option value="1-15">上半月开放</option>
-              <option value="16-31">下半月开放</option>
+              <option value="0">随时开放</option>
+              <option value="1">上半月开放</option>
+              <option value="2">下半月开放</option>
             </select>
-            <input type="hidden" name="menuid" value="10">
+            <input type="hidden" name="menuid" value="<?=$menus[0]->id?>">
             <input type="submit" value="确定" class="btn btn-g mgl15">
         </form>
         <div class="tip-btn hide">
@@ -71,14 +71,14 @@ $params['countdown'] = $countdown;
   <div class="aler_dialog hide">
     <a href="javascript:;" class="close"><image class="fl" src="/images/close.png"/></a>
     <div class="content">
-      <form action="">
+      <form autocomplete="off">
         <div class="item">
         <label for="a00">菜单名称</label>
-        <input type="text" id="a00" class="inp" maxlength="10" name="menuName">
+        <input type="text" id="a00" class="inp" maxlength="10" name="menuName" required>
         </div>
         <div class="item">
         <label for="a01">联系电话</label>
-          <input type="text" id="a01" class="inp" maxlength="30" name="menuPhones">
+          <input type="text" id="a01" class="inp" maxlength="30" name="menuPhones" required>
           <div class="label-tip">多个号码用空隔分开</div>
         </div>
         <div class="item">
@@ -97,6 +97,9 @@ $params['countdown'] = $countdown;
   <span class="txt">秒</span>
 </script>
 <script type="text/tmpl" id="tem-dishlist">
+{% if(obj.length <1) { %}
+    <tr><td colspan="5" class="alc">暂时没有开放的菜单!</td></tr>
+{%}%}
 {% _.each(obj, function(e,i,o){ %}
   <tr data-id="{{e.id}}">
     <td width="35%"><span class="mgl dish-name">{{-e.dish_name}}</span></td>

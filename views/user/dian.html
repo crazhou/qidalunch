@@ -62,6 +62,9 @@ $params['countdown'] = $countdown;
   <span class="txt">秒</span>
 </script>
 <script type="text/tmpl" id="tem-dishlist">
+{% if(obj.length <1) { %}
+    <tr><td colspan="3" class="alc">暂时没有开放的菜单!</td></tr>
+{%}%}
 {% _.each(obj, function(e,i,o){ %}
   <tr data-id="{{e.id}}">
     <td width="45%"><span class="mgl dish-name">{{-e.dish_name}}</span></td>
