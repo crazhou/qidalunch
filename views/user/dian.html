@@ -1,7 +1,10 @@
 <?php
+use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
 $this->title = '开始点餐';
 $params = &Yii::$app->params;
 $cache = Yii::$app->cache;
+$sess = Yii::$app->session;
 $params['hasCount'] = $hasCount;
 $params['fixed'] = $fixed;
 $params['script'] = 'src';
@@ -21,8 +24,8 @@ $params['countdown'] = $countdown;
       </div>
       <div class="ppset">
         <div class="t1">今日值班人: <span class="color-org f16"><?=$cache->get('admin_name')?></span></div>
-        <div class="t2">
-          <a href="javascript:;" data-id="<?=$cache->get('admin_user')?>">为TA点赞<i class="fa fa-thumbs-o-up mgl5 fa-lg"></i></a>
+        <div class="t2<?=$sess->has('had-star')?' had-star':''?>">
+          <a href="javascript:;" id="dZhan"><?=$sess->has('had-star')?' 已赞':'为TA点赞'?><i class="fa fa-thumbs-o-up mgl5 fa-lg"></i></a>
         </div>
       </div>
       <div class="ptabs">
@@ -46,8 +49,12 @@ $params['countdown'] = $countdown;
       </div>
       <div class="tips">
         <div class="tip-btn hide">
+            <?php ActiveForm::begin(['options' => ['class'=>'add-order']]); ?>
+          <input type="hidden" name="menuid" value="<?=$menus[0]->id?>">
+          <input type="hidden" name="order_detail" value="" id="od1">
           <div class="tip-txt fl"></div>
-          <a href="javascript:;" class="btn btn-o">确定</a>
+          <a href="javascript:;" class="btn btn-o" id="sub_order">确定</a>
+            </form>
         </div>
       </div>
     </div>
@@ -90,9 +97,6 @@ $params['countdown'] = $countdown;
     <span class="color-org">{{-e.name}}</span>{{e.count}}份,
   {%allpri+=e.price*e.count})%}
   共计：<strong class="color-org">¥{{allpri}}</strong>
+<input type="hidden" name="order_volume" value="{{allpri}}" id="od2">
 </script>
-<script>
-    var pageVar = {
-        isAdmin : false
-    };
-</script>
+<script> var pageVar = { isAdmin : false}; </script>

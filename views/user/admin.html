@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
 $this->title = '管理员';
+$cache = Yii::$app->cache;
 $params = &Yii::$app->params;
 $params['hasCount'] = $hasCount;
 $params['fixed'] = $fixed;
@@ -13,7 +15,7 @@ $params['countdown'] = $countdown;
         <div class="headimg <?=$user->user_sex==='f'?'female':'male'?>"></div>
         <div class="fl c1">
           <div class="g1"><?=$user->user_name?></div>
-          <div class="g2">被赞 <span class="color-org"><?=$user->user_praise?></span> 次</div>
+          <div class="g2">被赞 <span class="color-org"><?=$cache->get('admin_praise')?></span> 次</div>
           <div class="g3">
             <a href="../entry/history.html">点餐记录</a>
           </div>
@@ -49,7 +51,7 @@ $params['countdown'] = $countdown;
         <table class="table" id="data_cont1"></table>
       </div>
       <div class="tips admintips">
-        <form class="add-dish" autocomplete="off">
+          <?php ActiveForm::begin(['options' => ['class'=>'add-dish']]); ?>
             <i class="fa fa-plus-circle fa-lg color-gre"></i>
             <input type="text" class="inp" name="dishName" id="dishName" placeholder="菜品名称" maxlength="10" required autofocus>
             <input type="text" class="inp mgl15 short" name="price" id="price" placeholder="价格" maxlength="2" required>
@@ -63,12 +65,16 @@ $params['countdown'] = $countdown;
         </form>
         <div class="tip-btn hide">
           <div class="tip-txt fl"></div>
-          <a href="javascript:;" class="btn btn-o">确定</a>
+            <?php ActiveForm::begin(['options' => ['class'=>'add-dish']]); ?>
+            <input type="hidden" name="menuid" value="<?=$menus[0]->id?>">
+            <input type="hidden" name="order_detail" value="" id="od1">
+          <a href="javascript:;" class="btn btn-o" id="sub_order">确定</a>
+            </form>
         </div>
       </div>
     </div>
   </div>
-  <div class="aler_dialog hide">
+  <div class="aler_dialog hide" id="d001">
     <a href="javascript:;" class="close"><image class="fl" src="/images/close.png"/></a>
     <div class="content">
       <form autocomplete="off">
@@ -87,6 +93,10 @@ $params['countdown'] = $countdown;
       </form>
     </div>
   </div>
+<div class="aler_dialog hide" id="d002">
+    <a href="javascript:;" class="close"><image class="fl" src="/images/close.png"/></a>
+    <div class="content alc"></div>
+</div>
 <script type="text/tmpl" id="tem-countdown">
   <span class="txt">距离点餐结束还有：</span>
   <span class="out" id="h1">%{m1}</span>
@@ -130,9 +140,6 @@ $params['countdown'] = $countdown;
     <span class="color-org">{{-e.name}}</span>{{e.count}}份,
   {%allpri+=e.price*e.count})%}
   共计：<strong class="color-org">¥{{allpri}}</strong>
+  <input type="hidden" name="order_volume" value="{{allpri}}" id="od2">
 </script>
-<script>
-    var pageVar = {
-        isAdmin : true
-    };
-</script>
+<script> var pageVar = { isAdmin : true}; </script>

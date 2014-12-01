@@ -6,17 +6,41 @@ $(function() {
   }
 
     // 显示弹出层
-  var alertDialog = function (j) {
+  var alertDialog = function (j, txt) {
+
     this.open = function() {
       j.removeClass('hide')
-    }
-    this.init(j);  
-  }
+    };
+
+    this.hide = function() {
+      j.addClass('hide');
+    };
+
+    this.setContent = function(m) {
+      j.find('.content').html(m);
+        return this;
+    };
+    txt && this.setContent(txt);
+
+    this.tips = function(txt, t) {
+      txt && this.setContent(txt);
+      if(t> 1000) {
+          var _this = this;
+          this.open();
+          setTimeout(function(){
+              _this.hide();
+          }, t);
+      }
+
+    };
+     this.init(j);
+  };
 
   _.extend(alertDialog.prototype, {
     init : function(j) {
+        var _this = this;
       j.on('click', '.close', function(e){
-        j.addClass('hide');
+        _this.hide();
       });
     }
   })
@@ -71,7 +95,8 @@ $(function() {
       UpdateText();
   })
 
-  var dialog = new alertDialog($('.aler_dialog'));
+  var dialog = new alertDialog($('#d001')),
+      tip = new alertDialog($('#d002'));
   // 增加菜单
   $('.app').on('click', '.add-new-menu,.edit-menu', function(e) {
       dialog.open();
@@ -86,7 +111,8 @@ $(function() {
         _temp = _.template($('#tem-summary').html()),
         tiptxt= $('.tip-txt');
       if(trs.size()>0) {
-        trs.each(function(i,e){
+        var dataArr = [];
+        trs.each(function(i,e) {
           var 
           t = $(e),
           tmp = {
@@ -95,8 +121,11 @@ $(function() {
             count : t.find('.nums').html(),
             price : t.find('.price').html()
           };
+            dataArr.push(tmp.id + ':' + tmp.count);
           selData.push(tmp);
         });
+          var dataStr = dataArr.join('|');
+        $('#od1').val(dataStr);
         tiptxt.html(_temp(selData));
         tips.removeClass('hide');
       } else {
@@ -108,9 +137,9 @@ $(function() {
         var t = $(this),
             id = t.data('menuid');
         t.addClass('active').siblings().removeClass('active');
-
         getDishList(id);
         $('input[name=menuid]').val(id);
+        $('.tip-btn').addClass('hide');
     });
 
   // 模板渲染
@@ -139,11 +168,15 @@ $(function() {
         getDishList(id);
     }
 
+    // 如果是要管理员
     if(pageVar.isAdmin) {
         var form = $('.add-dish').on('submit', function(e) {
             e.preventDefault();
             var data = form.serializeArray(),
-                post_data = {}
+                post_data = {};
+            if(pageVar.onSubmit) {
+                return alert('正在提交...');
+            }
             $.each(data, function(i,e) {
                 if(e.value !== '') {
                     if(e.name === 'price') {
@@ -160,23 +193,42 @@ $(function() {
                     return false;
                 }
             });
-
-            if(_.size(post_data) === 4) {
+            if(_.size(post_data) === 5) {
                 var url = '/dish/adddish';
-
+                pageVar.onSubmit = true;
                 $.ajax(url, {
-                    type : 'GET',
+                    type : 'POST',
                     dataType : 'json',
                     data : post_data,
                     cache : false,
                     timeout : 2000,
                     success : function(resp) {
-
+                        debugger;
+                        if(!resp.ret) {
+                            tip.tips('菜品保存成功！', 1500);
+                            form.find('.inp').val('');
+                        }
+                    },
+                    complete : function() {
+                        pageVar.onSubmit = false;
                     }
                 });
             } else {
                 alert('输入不完整，请检查!');
             }
+        });
+    } else {
+        $('.t2').on('click', 'a', function(e){
+            e.preventDefault();
+            var url = '/user/addpraise',
+                t = $(this),p = t.parent();
+            if(p.hasClass('had-star')) return false;
+            $.getJSON(url, function(resp) {
+                if(!resp.ret) {
+                    t.html('已赞<i class="fa fa-thumbs-o-up mgl5 fa-lg"></i>');
+                    p.addClass('had-star');
+                }
+            });
         });
     }
 });

@@ -6,6 +6,7 @@ use yii\web\Controller;
 use app\models\User;
 use app\models\Menu;
 use app\models\Ye;
+use yii\web\Response;
 
 class UserController extends Controller
 {
@@ -68,7 +69,29 @@ class UserController extends Controller
 
         return $this->render('admin' , $data);
     }
+    /*
+     * 为管理员点赞
+     */
+    public function actionAddpraise()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $cache = Yii::$app->cache;
+        $admin_uid = $cache->get('admin_user');
+        $ok = User::findOne($admin_uid)->updateCounters(['user_praise' => 1]);
+        if($ok) {
+            Yii::$app->session->set('had-star', true);
+            $cache->set('admin_praise', User::findOne($admin_uid)->user_praise);
+        }
+        return [
+            'ret' => $ok?0:1,
+            'msg' => $ok ? 'ok':'somebad!',
+        ];
+    }
 
+
+    /*
+     * 用户列表页
+     */
     public function actionList()
     {
 

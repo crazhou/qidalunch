@@ -24,6 +24,7 @@ class DishController extends Controller{
         $pageNo = $page < 1 ? 0 : $page-1;
         $inwhere = [0, (date('j')<=15)?1:2];
         $query = Dish::find()
+            ->select(['id', 'dish_name', 'dish_price', 'dish_click_count'])
             ->where(['dish_menu_id' => $id, 'dish_open_time'=>$inwhere]);
 
         $countQuery = clone $query;
@@ -38,20 +39,43 @@ class DishController extends Controller{
             'ret' => 0,
             'dataset' => $dishs,
             'page' => $page,
+            'pageSize' => $pageSize,
             'totalPages' => ceil($countQuery->count()/$pageSize)
         ];
     }
 
+    /*
+     * 增加一个菜品
+     */
     public function actionAdddish()
     {
+        $dish = new Dish();
+        $req = Yii::$app->request;
+        $dish->dish_name = $req->post('dishName');
+        $dish->dish_price = $req->post('price', 0);
+        $dish->dish_open_time  = $req->post('openOn', 0);
+        $dish->dish_menu_id = $req->post('menuid');
+
+        $b = $dish->save();
+        if($b) {
+            return [
+                'ret' => 0,
+                'msg' => 'ok',
+            ];
+        }
 
     }
 
+    /*
+     * 更新一个菜品
+     */
     public function actionSavedish()
     {
 
     }
-
+    /*
+     * 删除一个菜品
+     */
     public function actionDeldish($id = '')
     {
 

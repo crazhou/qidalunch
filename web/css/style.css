@@ -251,8 +251,12 @@ a,input,select{
   padding: 8px 0;
   background-color: #76b42d;
 }
-.ppset .had-star{
+.ppset .had-star {
   background-color: #999999;
+}
+.ppset .had-star a{
+    text-decoration: none;
+    cursor: default;
 }
 .ppset .t2 a{
   color: #fff;

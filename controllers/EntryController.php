@@ -76,6 +76,7 @@ class EntryController extends Controller
         // 设置管理员
         $cache->set('admin_user', $user->getAttribute('id'), 3600);
         $cache->set('admin_name', $user->getAttribute('user_name'), 3600);
+        $cache->set('admin_praise', $user->getAttribute('user_praise'), 3600);
 
         return $this->render('choosemenu', $data);
     }

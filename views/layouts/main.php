@@ -10,6 +10,7 @@ $params = Yii::$app->params;
 <head>
     <meta charset="UTF-8">
     <title><?= Html::encode($this->title)?></title>
+    <?= Html::csrfMetaTags() ?>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/font-awesome.min.css">
 <?php $this->head()?>

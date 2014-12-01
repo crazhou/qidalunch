@@ -1,15 +1,16 @@
 <?php
 namespace app\models;
 
+
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\behaviors\TimestampBehavior;
 
-class Menu extends ActiveRecord {
+class Order extends ActiveRecord {
 
     public static function tableName()
     {
-        return '{{%dish_menu}}';
+        return '{{%order_record}}';
     }
 
     public function behaviors()
