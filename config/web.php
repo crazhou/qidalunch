@@ -26,8 +26,11 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'pDh2RlplgiNko4ebJNlbUYYK69bqMzKd',
         ],
+        'session' => [
+            'class' => 'yii\mongodb\Session',
+        ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\mongodb\Cache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -53,6 +56,10 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'mongodb' => [
+            'class' => '\yii\mongodb\Connection',
+            'dsn' => 'mongodb://localhost:27001/diancan',
+        ],
     ],
     'params' => $params,
 ];

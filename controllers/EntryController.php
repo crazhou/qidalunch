@@ -17,6 +17,7 @@ class EntryController extends Controller
         $this->countdown = Ye::getCountdown();
         $sess = Yii::$app->session;
         $cache = Yii::$app->cache;
+        $sess->setCookieParams(Yii::$app->params['cookieParams']);
         if($sess->has('current_user') AND $cache->exists('admin_user')) {
             if($sess->get('current_user')->getAttribute('id') === $cache->get('admin_user')) {
                 $this->redirect('user/admin');

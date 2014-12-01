@@ -1,6 +1,10 @@
 <?php
 return [
-    'startTime' => '00:00',
-    'endTime' => '10:00',
+    'startTime' => '10:00',
+    'endTime' => '18:00',
     'pageSize' => 10,
+    'cookieParams' => [
+        'lifetime' => 3600,
+        'httponly' => true,
+    ]
 ];
