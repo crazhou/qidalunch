@@ -64,11 +64,11 @@ $params['countdown'] = $countdown;
             <input type="submit" value="确定" class="btn btn-g mgl15">
         </form>
         <div class="tip-btn hide">
-          <div class="tip-txt fl"></div>
-            <?php ActiveForm::begin(['options' => ['class'=>'add-dish']]); ?>
-            <input type="hidden" name="menuid" value="<?=$menus[0]->id?>">
-            <input type="hidden" name="order_detail" value="" id="od1">
-          <a href="javascript:;" class="btn btn-o" id="sub_order">确定</a>
+            <?php ActiveForm::begin(['options' => ['class'=>'add-order']]); ?>
+                <div class="tip-txt fl"></div>
+                <input type="hidden" name="menuid" value="<?=$menus[0]->id?>">
+                <input type="hidden" name="order_detail" value="" id="od1">
+                <input type="submit" value="确定" class="btn btn-o" id="sub_order"/>
             </form>
         </div>
       </div>

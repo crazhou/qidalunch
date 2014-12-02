@@ -29,6 +29,7 @@ $config = [
         ],
         'session' => [
             'class' => 'yii\mongodb\Session',
+            'name'  => 'wmb_id'
         ],
         'cache' => [
             'class' => 'yii\mongodb\Cache',

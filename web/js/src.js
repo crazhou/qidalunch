@@ -4,7 +4,6 @@ $(function() {
     evaluate : /\{%([\s\S]+?)%\}/g,
     escape: /\{\{-([\s\S]+?)\}\}/g
   }
-
     // 显示弹出层
   var alertDialog = function (j, txt) {
 
@@ -162,6 +161,7 @@ $(function() {
             }
         })
     }
+
     var activeEl = $('.ptabs').find('.active');
     if(activeEl.size() > 0) {
         var id = activeEl.data('menuid');
@@ -170,6 +170,7 @@ $(function() {
 
     // 如果是要管理员
     if(pageVar.isAdmin) {
+        // 增加菜品
         var form = $('.add-dish').on('submit', function(e) {
             e.preventDefault();
             var data = form.serializeArray(),
@@ -218,6 +219,7 @@ $(function() {
             }
         });
     } else {
+        // 点赞相关代码
         $('.t2').on('click', 'a', function(e){
             e.preventDefault();
             var url = '/user/addpraise',
@@ -231,4 +233,31 @@ $(function() {
             });
         });
     }
+
+    // 订单的提交
+    $('.add-order').on('submit', function(e) {
+        e.preventDefault();
+        var form = $(this),
+            data = form.serialize(),
+            url = '/order/add-order';
+        if(pageVar.onSubmit) {
+            alert('订单正在提交...');
+        }
+        pageVar.onSubmit = true;
+        $.ajax(url, {
+            type : 'POST',
+            dataType : 'json',
+            data : data,
+            cache : false,
+            timeout : 2000,
+            success : function(resp) {
+                console.log('Resp : ', resp);
+            },
+            complete : function() {
+                pageVar.onSubmit = false;
+            }
+        })
+
+
+    });
 });

@@ -1,5 +1,4 @@
 $(function() {
-
     var avali = [],
         short = $('#short');
 
