@@ -58,7 +58,7 @@ class OrderController extends Controller {
             $rows[$k]['dish_price'] = $dishs[$v['dish_id']]->dish_price;
         }
 
-        // TODO 点餐时限判断， 二次点餐提醒 
+        // TODO 点餐时限判断， 二次点餐提醒
 
         Order::addOrder($rows, (float)$req->post('order_volume'));
 
