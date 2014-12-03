@@ -83,7 +83,7 @@ class OrderController extends Controller {
             $rows[$k]['dish_name'] = $dishs[$v['dish_id']]->dish_name;
             $rows[$k]['dish_price'] = $dishs[$v['dish_id']]->dish_price;
         }
-        
+
         Order::addOrder($rows, (float)$req->post('order_volume'));
 
         return [
