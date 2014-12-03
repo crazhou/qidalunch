@@ -59,7 +59,6 @@ class OrderController extends Controller {
         }
 
         // TODO 点餐时限判断， 二次点餐提醒
-
         Order::addOrder($rows, (float)$req->post('order_volume'));
 
     }
