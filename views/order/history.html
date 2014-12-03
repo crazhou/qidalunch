@@ -1,34 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>点餐记录 - 企大外卖宝</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-</head>
-<body class="fix">
-	<div class="header">
-    <div class="header-inner clearfix">
-      <img src="images/dish.png" alt="Logo" class="fl logo">
-      <span class="fl title">企大外卖宝</span>
-    </div>
-  </div>
-  <div class="app">
+<?php
+$this->title = '我的点餐记录';
+$params = &Yii::$app->params;
+$params['hasCount'] = FALSE;
+$params['fixed'] = TRUE;
+?>
+<div class="app">
   	<div class="panel">
   	<div class="headset">
-        <div class="headimg male"></div>
+        <div class="headimg <?=$user->user_sex==='f'?'female':'male'?>"></div>
         <div class="fl c1">
-          <div class="g1">周华辉</div>
-          <div class="g2">被赞<span class="color-org">666</span>次</div>
+          <div class="g1"><?=$user->user_name?></div>
+          <div class="g2">被赞 <span class="color-org"><?=$user->user_praise?></span> 次</div>
           <div class="g3">
-            <a href="../user/dian.html">返回点餐页</a>
+            <a href="/">返回点餐页</a>
           </div>
-        </div>
-      </div>
-      <div class="ppset">
-        <div class="t1">今日值班人: <span class="color-org f16">周华辉</span></div>
-        <div class="t2">
-          <a href="javascript:;">为TA点赞<i class="fa fa-thumbs-o-up mgl5 fa-lg"></i></a>
         </div>
       </div>
   </div>
@@ -194,5 +179,3 @@
   	</div>
   </div>
 </div>
-</body>
-</html>

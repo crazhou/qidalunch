@@ -22,7 +22,7 @@ $(function() {
     txt && this.setContent(txt);
 
     this.tips = function(txt, t) {
-      txt && this.setContent(txt);
+      txt && this.setContent('<div class="item">' + txt + '</div>');
       if(t> 1000) {
           var _this = this;
           this.open();
@@ -32,24 +32,44 @@ $(function() {
       }
 
     };
+    this.confirm = function(obj, onok, oncancel) {
+        // obj.okText, obj.cancelText, obj.content
+        var conf = _.extend({
+            'cancelText': '取消',
+            'okText' :'确定'
+        },obj);
+        j.find('.item:first').html(conf.content);
+        j.find('.item .btn').html(function(i, e) {
+          return [conf.okText, conf.cancelText][i];
+        });
+        this.onOk = onok;
+        this.onCancel = oncancel;
+        this.open();
+    };
      this.init(j);
   };
 
   _.extend(alertDialog.prototype, {
+      // 事件处理
     init : function(j) {
         var _this = this;
-      j.on('click', '.close', function(e){
-        _this.hide();
-      });
+        j.on('click', '.close', function(e){
+            _this.hide();
+        });
+        j.on('click', '.btn', function(e) {
+            var t= $(this);
+            if(t.hasClass('onOK')) {
+                _this.onOk?_this.onOk():_this.hide();
+            }
+            if(t.hasClass('onCancel')) {
+                _this.onCancel&&_this.onCancel();
+                _this.hide();
+            }
+        })
     }
   })
   // 倒计时代码
-  $('.countdown').countdown({
-    tmpl : $('#tem-countdown').html(),
-    afterEnd : function(q) {
-        q.html('<span class="txt">不在点餐时间段</span>')
-    }
-  })
+
 
   // 自定义Checkbox
   $('.table').on('click', '.con-chk', function(e) {
@@ -95,7 +115,8 @@ $(function() {
   })
 
   var dialog = new alertDialog($('#d001')),
-      tip = new alertDialog($('#d002'));
+      tip = new alertDialog($('#d002')),
+      dia2 = new alertDialog($('#d003'));
   // 增加菜单
   $('.app').on('click', '.add-new-menu,.edit-menu', function(e) {
       dialog.open();
@@ -170,6 +191,22 @@ $(function() {
 
     // 如果是要管理员
     if(pageVar.isAdmin) {
+        // 刷新今日订单量
+        var Count = $('.count');
+        var T = setInterval(function() {
+            $.ajax('/order/todaycount', {
+                type : 'GET',
+                dataType : 'json',
+                cache : false,
+                timeout : 2000,
+                success : function(resp) {
+                    if(!resp.ret) {
+                        Count.html(resp.dataset.Volume).addClass('color-red')
+                    }
+                }
+            })
+        }, 2000);
+
         // 增加菜品
         var form = $('.add-dish').on('submit', function(e) {
             e.preventDefault();
@@ -204,10 +241,10 @@ $(function() {
                     cache : false,
                     timeout : 2000,
                     success : function(resp) {
-                        debugger;
                         if(!resp.ret) {
                             tip.tips('菜品保存成功！', 1500);
                             form.find('.inp').val('');
+                            $('.ptabs .active').trigger('click');
                         }
                     },
                     complete : function() {
@@ -220,7 +257,7 @@ $(function() {
         });
     } else {
         // 点赞相关代码
-        $('.t2').on('click', 'a', function(e){
+        $('.t2').on('click', 'a', function(e) {
             e.preventDefault();
             var url = '/user/addpraise',
                 t = $(this),p = t.parent();
@@ -231,6 +268,28 @@ $(function() {
                     p.addClass('had-star');
                 }
             });
+        });
+
+        // 用户列表页
+        var url = '/user/get-users',
+            _temp = _.template($('#tem-userlist').html());
+        $.ajax(url, {
+            type : 'GET',
+            dataType : 'json',
+            cache : false,
+            timeout : 2000,
+            success : function(resp) {
+                if(!resp.ret) {
+                    $('#data_cont1').html(_temp(resp.dataset));
+                }
+            }
+        })
+        // 自定义 单选控件
+        $('.u-radio').on('click', '.radio', function(e){
+            var t = $(this),
+                v = t.data('v');
+            t.addClass('chked').siblings('.radio').removeClass('chked');
+            $('#h_gender').val(v);
         });
     }
 
@@ -251,13 +310,60 @@ $(function() {
             cache : false,
             timeout : 2000,
             success : function(resp) {
-                console.log('Resp : ', resp);
+                if(resp.ret === 1) {
+                    tip.tips(resp.errorMsg, 1500);
+                }
+                if(resp.ret === 2 ){
+                    dia2.confirm({
+                        content : resp.errorMsg,
+                        okText : '有钱,任性',
+                        cancelText : '不点了'
+                    }, function() {
+                        form.append('<input id="od2" type="hidden" name="force" value="1">').trigger('submit');
+                        this.hide();
+                    })
+                }
+                if(!resp.ret) {
+                    tip.tips(resp.msg, 2000);
+                }
             },
             complete : function() {
+                form.find('#od2').remove();
                 pageVar.onSubmit = false;
             }
         })
+    });
 
-
+    // 菜品的删除
+    $('.table-inter').on('click', '.del-dish', function(){
+        var t = $(this),
+            tr = t.parent().parent(),
+            id = tr.data('id'),
+            dish_name = tr.find('.dish-name').html();
+        dia2.confirm({
+            content : '确定要删除  <span class="color-red">' + dish_name + '</span>  这道菜吗？'
+        },function(){
+            var _this = this;
+            $.ajax('/dish/deldish',{
+                type : 'GET',
+                dataType : 'json',
+                data : {id : id},
+                cache : false,
+                timeout : 2000,
+                success : function(resp) {
+                    var msg = '';
+                    if(!resp.ret) {
+                        msg = resp.msg;
+                        $('.ptabs .active').trigger('click');
+                    } else {
+                        msg = '删除菜品失败!';
+                    }
+                    tip.tips(msg, 1500);
+                },
+                complete : function() {
+                    _this.hide();
+                }
+            })
+        })
     });
 });

@@ -1,0 +1,71 @@
+<?php
+$this->title = '用户列表';
+$params = &Yii::$app->params;
+$cache = Yii::$app->cache;
+$params['hasCount'] = $hasCount;
+$params['fixed'] = $fixed;
+$params['script'] = 'src';
+?>
+
+<div class="app">
+    <div class="panel">
+      <div class="headset">
+        <div class="headimg <?=$user->user_sex==='f'?'female':'male'?>""></div>
+        <div class="fl c1">
+          <div class="g1"><?=$user->user_name?></div>
+          <div class="g2">被赞 <span class="color-org"><?=$cache->get('admin_praise')?></span> 次</div>
+          <div class="g3">
+            <a href="/order/list">点餐记录</a>
+          </div>
+        </div>
+      </div>
+      <div class="mgt20">
+        <a href="/" class="btn btn-g">返回点餐页</a>
+      </div>
+    </div>
+    <div class="main">
+      <div class="title">用户管理</div>
+      <table class="table mgt10">
+        <thead>
+          <tr>
+            <th width="25%">姓名</th>
+            <th width="23%">简称</th>
+            <th width="30%">余额(元)</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+      </table>
+      <div class="table-inter table-inter2">
+        <table class="table" id="data_cont1"></table>
+      </div>
+      <div class="tips">
+        <form class="add-dish">
+            <i class="fa fa-user fa-lg color-gre"></i>
+            <input type="text" class="inp" name="fullName" id="fullName" placeholder="姓名" maxlength="10">
+            <input type="text" class="inp mgl15 short" name="shortName" id="shortName" placeholder="简称" maxlength="5">
+            <span class="u-radio">
+              <i class="radio chked" data-v="m"></i>
+              <span class="txt">男</span>
+              <i class="radio mgl" data-v="f"></i>
+              <span class="txt">女</span>
+            </span>
+            <input type="hidden" name="gender" id="h_gender" value="m">
+            <input type="submit" value="确定" class="btn btn-g mgl15">
+        </form>
+      </div>
+    </div>
+  </div>
+  <script type="text/tmpl" id="tem-userlist">
+    {% _.each(obj, function(e,i,o){%}
+      <tr data-id="{{e.id}}">
+        <td width="25%"><span class="mgl">{{-e.user_name}}</span></td>
+        <td width="26%"><span class="mgl">{{-e.user_spell}}</span></td>
+        <td width="25%"><span class="mgl{{e.balance<0?' color-org':' color-gre'}}">{{e.balance}}</span></td>
+        <td>
+          <input type="text" name="volume" class="inp tiny" value="{{Math.abs(e.balance)}}">
+          <a href="javascript:;" class="color-gre mgl">充值</a>
+        </td>
+      </tr>
+    {% }) %}
+  </script>
+<script> var pageVar = { isAdmin : false}; </script>

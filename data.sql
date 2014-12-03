@@ -84,8 +84,8 @@ CREATE TABLE `fund` (
   `user_id` int(11) NOT NULL COMMENT '用户ID',
   `user_balance` int(11) DEFAULT '0' COMMENT '余额',
   `user_total_amount` int(11) DEFAULT '0' COMMENT '总计充值金额',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `created_at` datetime NOT NULL COMMENT '创建时间',
+  `updated_at` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -116,8 +116,8 @@ CREATE TABLE `order_record` (
   `dish_name` varchar(20) NOT NULL COMMENT '菜品名称',
   `dish_price` float(10,2) NOT NULL COMMENT '菜品价格',
   `dish_count` int(11) NOT NULL COMMENT '菜品数量',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `created_at` datetime NOT NULL COMMENT '创建时间',
+  `updated_at` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -144,8 +144,8 @@ CREATE TABLE `recharge_record` (
   `user_id` int(11) NOT NULL COMMENT '充值消费用户ID',
   `change_amount` int(11) NOT NULL COMMENT '充值或消费金额',
   `createor` int(11) DEFAULT NULL COMMENT '创建用户ID',
-  `created_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '修改时间',
+  `created_at` datetime NOT NULL COMMENT '创建时间',
+  `updated_at` datetime NOT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -43,7 +43,7 @@ class UserController extends Controller
     }
 
     /*
-     * 管理员点餐
+     * 管理员点餐页
      */
     public function actionAdmin($menuid = '')
     {
@@ -94,6 +94,24 @@ class UserController extends Controller
      */
     public function actionList()
     {
+        $sess = Yii::$app->session;
+        $cache = Yii::$app->cache;
+        $data = [
+            'hasCount' => FALSE,
+            'fixed'  => TRUE,
+            'user' => $sess->get('current_user'),
+        ];
 
+        return $this->render('list', $data);
+    }
+
+    public  function actionGetUsers() {
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $d = User::getUserBalance();
+        return [
+            'ret' => 0,
+            'dataset' => $d,
+        ];
     }
 }

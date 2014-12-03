@@ -449,9 +449,13 @@ a,input,select{
 .main .short{
   width: 60px;
 }
+.main .tiny {
+    padding: 2px;
+    width: 50px;
+}
 .aler_dialog {
   width: 400px;
-  top : 25%;
+  top : 35%;
   left: 0;
   right: 0;
   margin: auto;

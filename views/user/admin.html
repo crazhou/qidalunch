@@ -17,7 +17,7 @@ $params['countdown'] = $countdown;
           <div class="g1"><?=$user->user_name?></div>
           <div class="g2">被赞 <span class="color-org"><?=$cache->get('admin_praise')?></span> 次</div>
           <div class="g3">
-            <a href="../entry/history.html">点餐记录</a>
+            <a href="/order/history">点餐记录</a>
           </div>
           <div class="g3"><a href="javascript:;" class="edit-menu" data-id="10">修改菜单</a></div>
         </div>
@@ -25,7 +25,7 @@ $params['countdown'] = $countdown;
       <div class="ppset adminset">
         <div class="t1">今日我值班: <a href="/user/list" class="color-org f16">用户管理</a></div>
         <div class="t2">
-          <a href="../entry/total.html">查看今日点餐</a><strong class="count">0</strong>
+          <a href="/order/total">查看今日点餐</a><strong class="count">0</strong>
         </div>
       </div>
       <div class="ptabs">
@@ -74,38 +74,7 @@ $params['countdown'] = $countdown;
       </div>
     </div>
   </div>
-  <div class="aler_dialog hide" id="d001">
-    <a href="javascript:;" class="close"><image class="fl" src="/images/close.png"/></a>
-    <div class="content">
-      <form autocomplete="off">
-        <div class="item">
-        <label for="a00">菜单名称</label>
-        <input type="text" id="a00" class="inp" maxlength="10" name="menuName" required>
-        </div>
-        <div class="item">
-        <label for="a01">联系电话</label>
-          <input type="text" id="a01" class="inp" maxlength="30" name="menuPhones" required>
-          <div class="label-tip">多个号码用空隔分开</div>
-        </div>
-        <div class="item">
-          <input type="submit" value="确定" class="btn btn-o">
-        </div>
-      </form>
-    </div>
-  </div>
-<div class="aler_dialog hide" id="d002">
-    <a href="javascript:;" class="close"><image class="fl" src="/images/close.png"/></a>
-    <div class="content alc"></div>
-</div>
-<script type="text/tmpl" id="tem-countdown">
-  <span class="txt">距离点餐结束还有：</span>
-  <span class="out" id="h1">%{m1}</span>
-  <span class="out" id="h2">%{m2}</span>
-  <span class="txt">分</span>
-  <span class="out" id="m1">%{s1}</span>
-  <span class="out" id="m2">%{s2}</span>
-  <span class="txt">秒</span>
-</script>
+<?=$this->render('../include/template')?>
 <script type="text/tmpl" id="tem-dishlist">
 {% if(obj.length <1) { %}
     <tr><td colspan="5" class="alc">暂时没有开放的菜单!</td></tr>
@@ -129,17 +98,9 @@ $params['countdown'] = $countdown;
       </div>
     </td>
     <td>
-    <a href="javascript:;" class="color-red mgl5">删除</a>
+    <a href="javascript:;" class="color-red mgl5 del-dish">删除</a>
     </td>
   </tr>
 {% }) %}
-</script>
-<script type="text/tmpl" id="tem-summary">
-  您已选择：
-  {% var allpri= 0; _.each(obj, function(e,i,o){%}
-    <span class="color-org">{{-e.name}}</span>{{e.count}}份,
-  {%allpri+=e.price*e.count})%}
-  共计：<strong class="color-org">¥{{allpri}}</strong>
-  <input type="hidden" name="order_volume" value="{{allpri}}" id="od2">
 </script>
 <script> var pageVar = { isAdmin : true}; </script>

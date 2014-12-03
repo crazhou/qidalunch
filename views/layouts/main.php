@@ -32,8 +32,16 @@ $params = Yii::$app->params;
     <script src="//apps.bdimg.com/libs/jquery/1.10.1/jquery.min.js"></script>
     <?php if($params['hasCount']): ?>
     <script src="/js/jquery.countdown.js"></script>
-    <script src="//apps.bdimg.com/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script>
+        $('.countdown').countdown({
+            tmpl : $('#tem-countdown').html(),
+            afterEnd : function(q) {
+                q.html('<span class="txt">不在点餐时间段</span>')
+            }
+        })
+    </script>
     <?php endif;?>
+    <script src="//apps.bdimg.com/libs/underscore.js/1.6.0/underscore-min.js"></script>
     <script src="/js/<?=$params['script']?>.js"></script>
 <?php endif;?>
 </body>

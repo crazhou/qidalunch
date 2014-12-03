@@ -1,32 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>订单汇总 - 企大外卖宝</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-</head>
-<body class="fix">
-  <div class="header">
-    <div class="header-inner clearfix">
-      <img src="images/dish.png" alt="Logo" class="fl logo">
-      <span class="fl title">企大外卖宝</span>
-    </div>
-  </div>
-  <div class="app">
+<?php
+$this->title = '今日点餐汇总';
+$params = &Yii::$app->params;
+$params['hasCount'] = FALSE;
+$params['fixed'] = TRUE;
+?>
+<div class="app">
     <div class="panel">
       <div class="headset">
-        <div class="headimg male"></div>
+        <div class="headimg <?=$user->user_sex==='f'?'female':'male'?>"></div>
         <div class="fl c1">
-          <div class="g1">周华辉</div>
-          <div class="g2">被赞<span class="color-org">666</span>次</div>
+          <div class="g1"><?=$user->user_name?></div>
+          <div class="g2">被赞 <span class="color-org"><?=$user->user_praise?></span> 次</div>
           <div class="g3">
-            <a href="history.html">点餐记录</a>
+            <a href="/order/history">点餐记录</a>
           </div>
         </div>
       </div>
       <div class="mgt20">
-        <a href="../user/admin.html" class="btn btn-g">返回点餐页</a>
+        <a href="/" class="btn btn-g">返回点餐页</a>
       </div>
     </div>
     <div class="main">
@@ -198,5 +189,3 @@
       </div>
     </div>
   </div>
-</body>
-</html>

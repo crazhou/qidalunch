@@ -78,6 +78,12 @@ class DishController extends Controller{
      */
     public function actionDeldish($id = '')
     {
-
+        $dish = Dish::findOne($id);
+        if($dish->delete()) {
+            return [
+                'ret' => 0,
+                'msg' => '删除成功！'
+            ];
+        }
     }
 }

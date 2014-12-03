@@ -4,10 +4,13 @@ namespace app\controllers;
 use app\models\Dish;
 use app\models\Order;
 use Yii;
+use yii\db\Expression;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\web\Controller;
 use app\models\Ye;
 use app\models\Menu;
+use yii\web\JsonResponseFormatter;
 use yii\web\Response;
 
 class OrderController extends Controller {
@@ -29,6 +32,26 @@ class OrderController extends Controller {
         $sess = Yii::$app->session;
         $user_id = $sess->get('current_user')->getAttribute('id');
 
+        // 判断时效
+        if($this->countdown < 0 ) {
+            return [
+                'ret' => 1,
+                'errorMsg' => '点餐时间已过,明天早点过来吧'
+            ];
+        }
+
+        if($req->post('force', 100) === 100) {
+            $res = Order::todayOrder($user_id);
+            $count = count($res);
+            if($count > 0 ) {
+                return [
+                    'ret' => 2,
+                    'errorMsg' => '你今天已经点了<span class="color-red"> '.$count.'</span> 单，还要再点吗？',
+                ];
+            }
+        }
+
+
         $menu = Menu::findOne($req->post('menuid'));
         $order_detail = $req->post('order_detail');
         $dishids = [];
@@ -47,9 +70,12 @@ class OrderController extends Controller {
                'dish_count' => $tmp[1],
                'dish_name' => 0,
                'dish_price' => 0,
+                'created_at' => new Expression('NOW()'),
+                'updated_at' => new Expression('NOW()'),
             ];
         }
         $dishDB = Dish::findAll($dishids);
+
         foreach($dishDB as $v) {
             $dishs[$v->id] = $v;
         }
@@ -58,17 +84,53 @@ class OrderController extends Controller {
             $rows[$k]['dish_price'] = $dishs[$v['dish_id']]->dish_price;
         }
 
-        // TODO 点餐时限判断， 二次点餐提醒
-
         Order::addOrder($rows, (float)$req->post('order_volume'));
+
+        return [
+            'ret' => 0,
+            'msg' => '订单创建成功！',
+        ];
 
     }
 
     /*
-     * 列出今日定单
+     *  个人订单历史
      */
-    public function actionListOrder()
+    public function actionHistory()
     {
+        $sess = Yii::$app->session;
 
+        $data = [
+            'user' => $sess->get('current_user')
+        ];
+        return $this->render('history', $data);
+    }
+
+    /*
+     * 当日订单汇总
+     */
+    public function actionTotal()
+    {
+        $sess = Yii::$app->session;
+
+        $menus = Order::todayUseMenu();
+
+        var_dump($menus);
+
+        $data = [
+            'user' => $sess->get('current_user')
+        ];
+        return $this->render('total', $data);
+    }
+
+    public function actionTodaycount()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $q = Order::todayCount();
+
+       return [
+           'ret' => 0,
+           'dataset' => $q,
+       ];
     }
 }

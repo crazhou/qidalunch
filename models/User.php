@@ -6,6 +6,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\db\Query;
 use yii\web\IdentityInterface;
 
 class User extends ActiveRecord implements IdentityInterface
@@ -80,5 +81,20 @@ class User extends ActiveRecord implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         return $this->authKey === $authKey;
+    }
+
+    /*
+     * 用户余额列表
+     */
+    public static function getUserBalance()
+    {
+        $q = (new Query)
+            ->from('user A')
+            ->select('A.id, A.user_name, A.user_sex, A.user_spell,B.user_balance as balance')
+            ->innerJoin('fund B', 'B.user_id = A.id AND A.status = 1')
+            ->orderBy('balance')
+            ->all();
+
+        return $q;
     }
 }
