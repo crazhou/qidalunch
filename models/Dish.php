@@ -6,8 +6,6 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 
 class Dish extends ActiveRecord {
-
-
     public static function tableName()
     {
         return '{{%dish}}';

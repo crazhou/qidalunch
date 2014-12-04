@@ -81,7 +81,7 @@ class Order extends ActiveRecord {
     {
         $db = self::getDb();
 
-        $result = $db->createCommand('SELECT id, type, user_id FROM recharge_record WHERE user_id = :user_id AND date(created_at) = curdate() ', [
+        $result = $db->createCommand('SELECT id, type, user_id FROM recharge_record WHERE user_id = :user_id AND date(created_at) = curdate() AND type = 1 ', [
             ':user_id' => $user_id,
         ])->queryAll();
 
@@ -93,10 +93,8 @@ class Order extends ActiveRecord {
      */
     public static function todayCount() {
         $db = self::getDb();
-        $result = $db->createCommand('SELECT count(id) as Volume FROM recharge_record WHERE date(created_at) = :date;', [
-            ':date' => date('Y-m-d'),
-        ])->queryOne();
-
+        $result = $db->createCommand('SELECT count(id) as Volume FROM recharge_record WHERE date(created_at) = curdate() and type = 1')
+            ->queryOne();
         return $result;
     }
 

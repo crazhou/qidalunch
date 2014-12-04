@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use app\models\Order;
 use Yii;
 use yii\web\Controller;
 use app\models\User;
@@ -50,11 +51,13 @@ class UserController extends Controller
         $cache = Yii::$app->cache;
         $sess = Yii::$app->session;
 
+        $count = Order::todayCount();
+
         $data = [
-            'hasCount' => TRUE,
             'countdown' => $this->countdown,
-            'fixed' => TRUE, // 使用固定布局
+            'count' => $count['Volume'],
         ];
+
         if(!empty($menuid)) {
             $menus = explode(',', $menuid);
             $cache->set('menu_ids', $menuid, 3600);
@@ -105,6 +108,9 @@ class UserController extends Controller
         return $this->render('list', $data);
     }
 
+    /*
+     * 列出用户和他们的余额
+     */
     public  function actionGetUsers() {
         Yii::$app->response->format = Response::FORMAT_JSON;
         $d = User::getUserBalance();
@@ -112,5 +118,55 @@ class UserController extends Controller
             'ret' => 0,
             'dataset' => $d,
         ];
+    }
+
+    /*
+     * 增加一个用户
+     */
+    public function actionAdd() {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $req = Yii::$app->request;
+        $user = new User();
+        $user->user_name = $req->post('user_name');
+        $user->user_sex = $req->post('user_sex');
+        $user->user_spell = $req->post('user_spell');
+        $res = $user->addUser();
+        if(is_int($res) AND $res > 0) {
+            return [
+                'ret' => 0,
+                'msg' => '添加成功!',
+            ];
+        } else {
+            return [
+                'ret' => 1,
+                'errorMsg' => '添加失败，简称可能存在重复！',
+            ];
+        }
+
+    }
+
+    /*
+     * 充用户充值， 条件，操作者 姓别为女，被赞大于等于10次
+     */
+    public function actionCharge()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $req = Yii::$app->request;
+        $curr_user = Yii::$app->session->get('current_user');
+
+        $user =  User::findIdentity($req->post('user_id'));
+        if($curr_user->user_praise >= 10 AND $curr_user->user_sex === 'f') {
+                if($user->charge($req->post('volume'), $curr_user->getAttribute('id'))) {
+                    return [
+                        'ret' =>0 ,
+                        'msg' => '充值成功！',
+                    ];
+                }
+        } else {
+            return [
+                'ret' =>1,
+                'errorMsg' => '你没有权限操作!',
+            ];
+        }
     }
 }

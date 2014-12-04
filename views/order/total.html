@@ -1,6 +1,7 @@
 <?php
 $this->title = '今日点餐汇总';
 $params = &Yii::$app->params;
+$cache = Yii::$app->cache;
 $params['hasCount'] = FALSE;
 $params['fixed'] = TRUE;
 ?>
@@ -10,7 +11,7 @@ $params['fixed'] = TRUE;
         <div class="headimg <?=$user->user_sex==='f'?'female':'male'?>"></div>
         <div class="fl c1">
           <div class="g1"><?=$user->user_name?></div>
-          <div class="g2">被赞 <span class="color-org"><?=$user->user_praise?></span> 次</div>
+          <div class="g2">被赞 <span class="color-org"><?=$cache->get('admin_praise')?></span> 次</div>
           <div class="g3">
             <a href="/order/history">点餐记录</a>
           </div>
@@ -37,14 +38,14 @@ $params['fixed'] = TRUE;
                   <?php foreach($dishs as $k1=>$v): if($val['id'] === $v['dish_menu_id']): $index=0?>
                   <?php foreach($userdishs as $k2=>$v2): if($v2['dish_id'] === $v['dish_id']):?>
                   <tr class="<?=$k1%2?'':'even'?>">
-                      <td width="20%"><?=$v2['user_name']?></td>
                       <?php if($index>0):?>
                           <td widdth="45%" colspan="2">&nbsp;</td>
                       <?php else:?>
-                          <td width="30%"><?=$v['dish_name']?></td>
+                          <td width="30%"><?=$v['dish_name']?> <span class="color-org">X <?=$v['volume']?></span></td>
                           <td width="15%">&yen;<?=$v['dish_price']?></td>
                       <?php endif;?>
-                      <td width="15%"><?=$v2['dish_count']?> / <?=$v['volume']?>份</td>
+                      <td width="20%"><?=$v2['user_name']?></td>
+                      <td width="15%"><?=$v2['dish_count']?> 份 </td>
                       <td>
                           <a href="javascript:;" class="color-org" data-orderid="<?=$v['order_id']?>">取消</a>
                       </td>

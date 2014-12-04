@@ -4,8 +4,8 @@ use yii\bootstrap\ActiveForm;
 $this->title = '管理员';
 $cache = Yii::$app->cache;
 $params = &Yii::$app->params;
-$params['hasCount'] = $hasCount;
-$params['fixed'] = $fixed;
+$params['hasCount'] = TRUE;
+$params['fixed'] = TRUE;
 $params['script'] = 'src';
 $params['countdown'] = $countdown;
 ?>
@@ -25,7 +25,7 @@ $params['countdown'] = $countdown;
       <div class="ppset adminset">
         <div class="t1">今日我值班: <a href="/user/list" class="color-org f16">用户管理</a></div>
         <div class="t2">
-          <a href="/order/total">查看今日点餐</a><strong class="count">0</strong>
+          <a href="/order/total">查看今日点餐</a><strong class="count"><?=$count?></strong>
         </div>
       </div>
       <div class="ptabs">
@@ -103,4 +103,4 @@ $params['countdown'] = $countdown;
   </tr>
 {% }) %}
 </script>
-<script> var pageVar = { isAdmin : true}; </script>
+<script> var pageVar = { isAdmin : true, countdown: <?=$countdown?>}; </script>

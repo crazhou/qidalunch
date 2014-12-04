@@ -42,7 +42,7 @@ $params['script'] = 'src';
       <div class="tips">
           <?php ActiveForm::begin(['options' => ['class'=>'add-user']]); ?>
             <i class="fa fa-user fa-lg color-gre"></i>
-            <input type="text" class="inp" name="user_name" id="fullName" required placeholder="姓名" maxlength="10">
+            <input type="text" class="inp" name="user_name" id="fullName" required autofocus placeholder="姓名" maxlength="10">
             <input type="text" class="inp mgl15 short" name="user_spell" required id="shortName" placeholder="简称" maxlength="5">
             <span class="u-radio">
               <i class="radio chked" data-v="m"></i>
@@ -56,15 +56,16 @@ $params['script'] = 'src';
       </div>
     </div>
   </div>
+<?=$this->render('../include/template')?>
   <script type="text/tmpl" id="tem-userlist">
     {% _.each(obj, function(e,i,o){%}
       <tr data-id="{{e.id}}">
-        <td width="25%"><span class="mgl">{{-e.user_name}}</span></td>
+        <td width="25%"><span class="mgl user-name">{{-e.user_name}}</span></td>
         <td width="26%"><span class="mgl">{{-e.user_spell}}</span></td>
         <td width="25%"><span class="mgl{{e.balance<0?' color-org':' color-gre'}}">{{e.balance}}</span></td>
         <td>
           <input type="text" name="volume" class="inp tiny" value="{{Math.abs(e.balance)}}">
-          <a href="javascript:;" class="color-gre mgl" data-id="{{e.id}}">充值</a>
+          <a href="javascript:;" class="color-gre mgl chargeAct" data-id="{{e.id}}">充值</a>
         </td>
       </tr>
     {% }) %}
