@@ -15,9 +15,15 @@ class EntryController extends Controller
     public function init()
     {
         $this->countdown = Ye::getCountdown();
+        Yii::$app->session->setCookieParams(Yii::$app->params['cookieParams']);
+    }
+    /*
+     * 用户统欢迎页
+     */
+    public function actionIndex()
+    {
         $sess = Yii::$app->session;
         $cache = Yii::$app->cache;
-        $sess->setCookieParams(Yii::$app->params['cookieParams']);
         if($sess->has('current_user') AND $cache->exists('admin_user')) {
             if($sess->get('current_user')->getAttribute('id') === $cache->get('admin_user')) {
                 $this->redirect('user/admin');
@@ -25,12 +31,6 @@ class EntryController extends Controller
                 $this->redirect('user/dian');
             }
         }
-    }
-    /*
-     * 用户统欢迎页
-     */
-    public function actionIndex()
-    {
         $users = User::findAll(['status'=>1]);
         return $this->render('index1', [
             'users' => $users,

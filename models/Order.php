@@ -81,9 +81,8 @@ class Order extends ActiveRecord {
     {
         $db = self::getDb();
 
-        $result = $db->createCommand('SELECT id, type, user_id FROM recharge_record WHERE user_id = :user_id AND date(created_at) = :date ', [
+        $result = $db->createCommand('SELECT id, type, user_id FROM recharge_record WHERE user_id = :user_id AND date(created_at) = curdate() ', [
             ':user_id' => $user_id,
-            ':date' => date('Y-m-d'),
         ])->queryAll();
 
         return $result;
@@ -94,7 +93,6 @@ class Order extends ActiveRecord {
      */
     public static function todayCount() {
         $db = self::getDb();
-
         $result = $db->createCommand('SELECT count(id) as Volume FROM recharge_record WHERE date(created_at) = :date;', [
             ':date' => date('Y-m-d'),
         ])->queryOne();
@@ -102,10 +100,38 @@ class Order extends ActiveRecord {
         return $result;
     }
 
-    public static function todayUseMenu() {
+    /*
+     * 今天被点的菜单
+     */
+    public static function todayUseMenu()
+    {
         $db = self::getDb();
         $q = $db->createCommand(
-            'select menu_name,menu_telephone from dish_menu where id in (select distinct dish_menu_id from order_record where date(created_at) = curdate())'
+            'select id, menu_name,menu_telephone from dish_menu where id in (select distinct dish_menu_id from order_record where date(created_at) = curdate())'
+        )->queryAll();
+        return $q;
+    }
+
+    /*
+     * 今日点的菜汇总
+     */
+    public static function todayUseDish()
+    {
+        $db = self::getDb();
+        $q = $db->createCommand(
+            'select id as order_id,user_id,dish_id, dish_name, dish_price, SUM(dish_count) as volume, dish_menu_id from order_record where date(created_at) = curdate() group by dish_id;'
+        )->queryAll();
+        return $q;
+    }
+
+    /*
+     * 每个菜由哪些用户点了
+     */
+    public static function todayUserDish()
+    {
+        $db = self::getDb();
+        $q = $db->createCommand(
+            'select B.user_id ,A.user_name, B.dish_id, B.dish_count from order_record B INNER JOIN user A on date(B.created_at) = curdate() AND B.user_id = A.id;'
         )->queryAll();
         return $q;
     }

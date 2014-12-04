@@ -1,4 +1,5 @@
 <?php
+use yii\bootstrap\ActiveForm;
 $this->title = '用户列表';
 $params = &Yii::$app->params;
 $cache = Yii::$app->cache;
@@ -15,7 +16,7 @@ $params['script'] = 'src';
           <div class="g1"><?=$user->user_name?></div>
           <div class="g2">被赞 <span class="color-org"><?=$cache->get('admin_praise')?></span> 次</div>
           <div class="g3">
-            <a href="/order/list">点餐记录</a>
+            <a href="/order/history">点餐记录</a>
           </div>
         </div>
       </div>
@@ -39,18 +40,18 @@ $params['script'] = 'src';
         <table class="table" id="data_cont1"></table>
       </div>
       <div class="tips">
-        <form class="add-dish">
+          <?php ActiveForm::begin(['options' => ['class'=>'add-user']]); ?>
             <i class="fa fa-user fa-lg color-gre"></i>
-            <input type="text" class="inp" name="fullName" id="fullName" placeholder="姓名" maxlength="10">
-            <input type="text" class="inp mgl15 short" name="shortName" id="shortName" placeholder="简称" maxlength="5">
+            <input type="text" class="inp" name="user_name" id="fullName" required placeholder="姓名" maxlength="10">
+            <input type="text" class="inp mgl15 short" name="user_spell" required id="shortName" placeholder="简称" maxlength="5">
             <span class="u-radio">
               <i class="radio chked" data-v="m"></i>
               <span class="txt">男</span>
               <i class="radio mgl" data-v="f"></i>
               <span class="txt">女</span>
             </span>
-            <input type="hidden" name="gender" id="h_gender" value="m">
-            <input type="submit" value="确定" class="btn btn-g mgl15">
+            <input type="hidden" name="user_sex" id="h_gender" value="m">
+            <input type="submit" value="保存" class="btn btn-g mgl15">
         </form>
       </div>
     </div>
@@ -63,9 +64,9 @@ $params['script'] = 'src';
         <td width="25%"><span class="mgl{{e.balance<0?' color-org':' color-gre'}}">{{e.balance}}</span></td>
         <td>
           <input type="text" name="volume" class="inp tiny" value="{{Math.abs(e.balance)}}">
-          <a href="javascript:;" class="color-gre mgl">充值</a>
+          <a href="javascript:;" class="color-gre mgl" data-id="{{e.id}}">充值</a>
         </td>
       </tr>
     {% }) %}
   </script>
-<script> var pageVar = { isAdmin : false}; </script>
+<script> var pageVar = { isAdmin : false, UserList : true}; </script>

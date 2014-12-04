@@ -84,7 +84,7 @@ class UserController extends Controller
         }
         return [
             'ret' => $ok?0:1,
-            'msg' => $ok ? 'ok':'somebad!',
+            'msg' => $ok ? 'ok':'some bad!',
         ];
     }
 
@@ -106,7 +106,6 @@ class UserController extends Controller
     }
 
     public  function actionGetUsers() {
-
         Yii::$app->response->format = Response::FORMAT_JSON;
         $d = User::getUserBalance();
         return [

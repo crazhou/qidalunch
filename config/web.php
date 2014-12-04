@@ -15,7 +15,7 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                'entry/<short:\w{2,3}>' => 'entry/u',
+                'entry/<short:\w{2,5}>' => 'entry/u',
                 'user/<action:(dian|admin)>/<short:\w+>' => 'user/<action>',
                 'clear' => 'entry/clear',
             ]

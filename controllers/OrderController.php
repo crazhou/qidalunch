@@ -114,11 +114,14 @@ class OrderController extends Controller {
         $sess = Yii::$app->session;
 
         $menus = Order::todayUseMenu();
-
-        var_dump($menus);
+        $dishs = Order::todayUseDish();
+        $userDishs = Order::todayUserDish();
 
         $data = [
-            'user' => $sess->get('current_user')
+            'user' => $sess->get('current_user'),
+            'menus' => $menus,
+            'dishs' => $dishs,
+            'userdishs' => $userDishs,
         ];
         return $this->render('total', $data);
     }

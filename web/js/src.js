@@ -227,11 +227,11 @@ $(function() {
                         post_data[e.name] = e.value;
                     }
                 } else {
-                    alert('还有字段没有填写！');
+                    alert('你是不是漏了什么?');
                     return false;
                 }
             });
-            if(_.size(post_data) === 5) {
+            if(_.size(post_data) >= 5) {
                 var url = '/dish/adddish';
                 pageVar.onSubmit = true;
                 $.ajax(url, {
@@ -251,8 +251,6 @@ $(function() {
                         pageVar.onSubmit = false;
                     }
                 });
-            } else {
-                alert('输入不完整，请检查!');
             }
         });
     } else {
@@ -270,27 +268,57 @@ $(function() {
             });
         });
 
-        // 用户列表页
-        var url = '/user/get-users',
-            _temp = _.template($('#tem-userlist').html());
-        $.ajax(url, {
-            type : 'GET',
-            dataType : 'json',
-            cache : false,
-            timeout : 2000,
-            success : function(resp) {
-                if(!resp.ret) {
-                    $('#data_cont1').html(_temp(resp.dataset));
+        if(pageVar.UserList) {
+            // 用户列表页
+            var url = '/user/get-users',
+                _temp = _.template($('#tem-userlist').html());
+            $.ajax(url, {
+                type : 'GET',
+                dataType : 'json',
+                cache : false,
+                timeout : 2000,
+                success : function(resp) {
+                    if(!resp.ret) {
+                        $('#data_cont1').html(_temp(resp.dataset));
+                    }
                 }
-            }
-        })
-        // 自定义 单选控件
-        $('.u-radio').on('click', '.radio', function(e){
-            var t = $(this),
-                v = t.data('v');
-            t.addClass('chked').siblings('.radio').removeClass('chked');
-            $('#h_gender').val(v);
-        });
+            })
+            // 自定义 单选控件
+            $('.u-radio').on('click', '.radio', function(e){
+                var t = $(this),
+                    v = t.data('v');
+                t.addClass('chked').siblings('.radio').removeClass('chked');
+                $('#h_gender').val(v);
+            });
+            // 增加用户表单
+            $('.add-user').on('submit', function(e){
+                e.preventDefault();
+                var form = $(this),
+                    data = form.serializeArray(),
+                    post_data = {};
+                $.each(data, function(i,e) {
+                    if(e.value === '') {
+                        alert('你是不是漏了什么?');
+                        return false;
+                    } else {
+                        if(e.name === 'user_spell') {
+                            if(/^\w{2,5}$/.test(e.value)) {
+                                post_data[e.name] = e.value;
+                            } else {
+                                alert('简拼只能为字母或数字,长度2-5位')
+                            }
+                        } else {
+                            post_data[e.name] = e.value;
+                        }
+                    }
+                });
+
+                if(_.size(post_data) >= 4) {
+
+                }
+            });
+        }
+
     }
 
     // 订单的提交
