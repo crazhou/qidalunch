@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Exception;
 use yii\db\Expression;
 use yii\db\Query;
 use yii\web\IdentityInterface;
@@ -37,7 +38,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id]);
+        return static::findOne($id);
     }
 
     /**
@@ -96,5 +97,56 @@ class User extends ActiveRecord implements IdentityInterface
             ->all();
 
         return $q;
+    }
+
+    /*
+     * 添加用户
+     */
+    public function addUser()
+    {
+        $db = static::getDb();
+        try {
+            if($this->save()) {
+                $user_id = $this->getPrimaryKey();
+                $affect = $db->createCommand()
+                    ->insert('fund',[
+                        'user_id' => $user_id,
+                        'user_balance' => 0,
+                        'user_total_amount'=> 0,
+                        'created_at' => new Expression('NOW()'),
+                        'updated_at' => new Expression('NOW()'),
+                    ])
+                    ->execute();
+                return $affect;
+            }
+        } catch(Exception $e) {
+            return $e->getName();
+        }
+
+    }
+
+    /*
+     * @volume 金额
+     * @createor 充值操作者
+     * 为用户充值
+     */
+    public function charge($volume, $cid)
+    {
+        $db = self::getDb();
+        $user_id = $this->getPrimaryKey();
+        $a1 = $db->createCommand()->insert('recharge_record', [
+            'user_id' => $user_id,
+            'change_amount' => $volume,
+            'createor'  => $cid,
+            'type' => 2,
+            'created_at' => new Expression('NOW()'),
+            'updated_at' => new Expression('NOW()'),
+        ])->execute();
+        $a2 = $db->createCommand('update fund set user_balance = user_balance + :volume,user_total_amount = user_total_amount + :volume where user_id = :user_id;')
+            ->bindValue(':volume', $volume)
+            ->bindValue(':user_id', $user_id)
+            ->execute();
+
+        return $a1 > 0 AND $a2 > 0;
     }
 }

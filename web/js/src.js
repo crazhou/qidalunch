@@ -193,19 +193,25 @@ $(function() {
     if(pageVar.isAdmin) {
         // 刷新今日订单量
         var Count = $('.count');
-        var T = setInterval(function() {
-            $.ajax('/order/todaycount', {
-                type : 'GET',
-                dataType : 'json',
-                cache : false,
-                timeout : 2000,
-                success : function(resp) {
-                    if(!resp.ret) {
-                        Count.html(resp.dataset.Volume).addClass('color-red')
+        if(pageVar.countdown > 5) {
+            var T = setInterval(function () {
+                $.ajax('/order/todaycount', {
+                    type: 'GET',
+                    dataType: 'json',
+                    cache: false,
+                    timeout: 2000,
+                    success: function (resp) {
+                        if (!resp.ret) {
+                            var vo = resp.dataset.Volume;
+                            Count.html(vo > 9 ? '9+' : vo).addClass('color-red').attr('title', '总订单数:' + vo);
+                        }
                     }
-                }
-            })
-        }, 2000);
+                })
+            }, 2000);
+            setTimeout(function () {
+                clearInterval(T)
+            }, pageVar.countdown * 1000);
+        }
 
         // 增加菜品
         var form = $('.add-dish').on('submit', function(e) {
@@ -268,27 +274,69 @@ $(function() {
             });
         });
 
+        // 用户列表页
         if(pageVar.UserList) {
-            // 用户列表页
-            var url = '/user/get-users',
-                _temp = _.template($('#tem-userlist').html());
-            $.ajax(url, {
-                type : 'GET',
-                dataType : 'json',
-                cache : false,
-                timeout : 2000,
-                success : function(resp) {
-                    if(!resp.ret) {
-                        $('#data_cont1').html(_temp(resp.dataset));
+            function updateUsers() {
+                var url = '/user/get-users',
+                    _temp = _.template($('#tem-userlist').html());
+                $.ajax(url, {
+                    type : 'GET',
+                    dataType : 'json',
+                    cache : false,
+                    timeout : 2000,
+                    success : function(resp) {
+                        if(!resp.ret) {
+                            $('#data_cont1').html(_temp(resp.dataset));
+                        }
                     }
-                }
-            })
+                })
+            }
+            updateUsers();
             // 自定义 单选控件
-            $('.u-radio').on('click', '.radio', function(e){
+            $('.u-radio').on('click', '.radio', function(e) {
                 var t = $(this),
                     v = t.data('v');
                 t.addClass('chked').siblings('.radio').removeClass('chked');
                 $('#h_gender').val(v);
+            });
+            // 充值相关代码
+            $('#data_cont1').on('click', '.chargeAct', function(e) {
+                var t = $(this),
+                    tr = t.parent().parent(),
+                    userId = t.data('id'),
+                    userName = tr.find('.user-name').html(),
+                    volume = tr.find('.tiny').val(),
+                    _temp = _.template('确定要为 <span class="color-org">{{userName}}</span> 充值 <span class="color-red">{{volume}}</span> 元吗？');
+                if(volume <=0) {
+                    return tip.tips('<span class="color-red">充值余额必需大于0</span>', 1500);
+                }
+                dia2.confirm({
+                    content: _temp({userName:userName,volume:volume}),
+                    okText:'充值',
+                    cancelText: '没钱，不充'
+                }, false, function() {
+                    var url = '/user/charge',
+                        data = {
+                            user_id : userId,
+                            volume : volume,
+                            _csrf : $('input:hidden[name=_csrf]').val()
+                        };
+                    $.ajax(url, {
+                        type : 'POST',
+                        dataType : 'json',
+                        data : data,
+                        cache : false,
+                        timeout : 2000,
+                        success : function(resp) {
+                            if(!resp.ret) {
+                                tip.tips(resp.msg,1800);
+                                updateUsers();
+                            } else {
+                                tip.tips(resp.errorMsg, 1500);
+                            }
+                        }
+                    })
+                });
             });
             // 增加用户表单
             $('.add-user').on('submit', function(e){
@@ -312,9 +360,24 @@ $(function() {
                         }
                     }
                 });
-
                 if(_.size(post_data) >= 4) {
-
+                    var url = '/user/add';
+                    $.ajax(url, {
+                        type : 'POST',
+                        dataType : 'json',
+                        data : post_data,
+                        cache : false,
+                        timeout : 2000,
+                        success : function(resp) {
+                            if(!resp.ret) {
+                                form.find('.inp').val('').first().trigger('focus');
+                                tip.tips(resp.msg, 1500);
+                                updateUsers();
+                            } else {
+                                tip.tips(resp.errorMsg, 1500);
+                            }
+                        }
+                    })
                 }
             });
         }
@@ -344,7 +407,7 @@ $(function() {
                 if(resp.ret === 2 ){
                     dia2.confirm({
                         content : resp.errorMsg,
-                        okText : '有钱,任性',
+                        okText : '有钱，任性',
                         cancelText : '不点了'
                     }, function() {
                         form.append('<input id="od2" type="hidden" name="force" value="1">').trigger('submit');
@@ -363,7 +426,7 @@ $(function() {
     });
 
     // 菜品的删除
-    $('.table-inter').on('click', '.del-dish', function(){
+    $('.table-inter').on('click', '.del-dish', function() {
         var t = $(this),
             tr = t.parent().parent(),
             id = tr.data('id'),
