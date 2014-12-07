@@ -1,7 +1,7 @@
 # phpstorm project files
 .idea
-/config/*.php
-/web/*.php
+/config
+/web/index.php
 # netbeans project files
 nbproject
 
