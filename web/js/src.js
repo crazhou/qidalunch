@@ -68,9 +68,6 @@ $(function() {
         })
     }
   })
-  // 倒计时代码
-
-
   // 自定义Checkbox
   $('.table').on('click', '.con-chk', function(e) {
     var t = $(this),
@@ -410,7 +407,7 @@ $(function() {
                         okText : '有钱，任性',
                         cancelText : '不点了'
                     }, function() {
-                        form.append('<input id="od2" type="hidden" name="force" value="1">').trigger('submit');
+                        form.append('<input id="od3" type="hidden" name="force" value="1">').trigger('submit');
                         this.hide();
                     })
                 }
@@ -419,7 +416,7 @@ $(function() {
                 }
             },
             complete : function() {
-                form.find('#od2').remove();
+                form.find('#od3').remove();
                 pageVar.onSubmit = false;
             }
         })

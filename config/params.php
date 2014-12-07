@@ -1,6 +1,6 @@
 <?php
 return [
-    'startTime' => '9:00',
+    'startTime' => '00:00',
     'endTime' => '23:50',
     'pageSize' => 50,
     'cookieParams' => [
