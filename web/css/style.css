@@ -293,7 +293,7 @@ a,input,select{
 }
 .ptabs{
   top : 250px;
-  left : 12px;
+  left : 18px;
   text-align: left;
   position: absolute;
   z-index: 2;
@@ -302,7 +302,8 @@ a,input,select{
   display: block;
   color:#505050;
   width: 200px;
-  padding: 20px 5px 20px 20px;
+  padding: 15px 5px 15px 15px;
+  font-size: 14px;
   border-bottom: 1px solid #dbe5d1;
 }
 .ptabs .active{
@@ -370,6 +371,7 @@ a,input,select{
   padding: 1px;
   background-color: #fff;
   border: 1px solid #aaa;
+  cursor: pointer;
   position: relative;
 }
 .chked .fa{
@@ -522,6 +524,11 @@ a,input,select{
   overflow: hidden;
   border-top: 1px solid #dbe5d1;
   padding-top: 20px;
+}
+.dian-header .more {
+    font-size: 14px;
+    float: left;
+    margin:5px 0 0 10px;
 }
 .tb2{
   border-collapse: collapse;

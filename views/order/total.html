@@ -4,6 +4,7 @@ $params = &Yii::$app->params;
 $cache = Yii::$app->cache;
 $params['hasCount'] = FALSE;
 $params['fixed'] = TRUE;
+$params['script'] = 'src';
 ?>
 <div class="app">
     <div class="panel">
@@ -28,6 +29,7 @@ $params['fixed'] = TRUE;
           <div class="dian-cont">
               <div class="dian-header">
                   <div class="ft20 fl"><?=$val['menu_name']?></div>
+                  <a class="more" href="javascript:;">显示人员<i class="fa fa-angle-down"></i></a>
                   <div class="phones fr mgr10">
                       <i class="fa fa-phone fa-lg color-gre"></i>
                       <span class="color-gre"><?=str_replace(' ', '</span><span class="color-gre mgl">', $val['menu_telephone'])?></span>
@@ -37,9 +39,9 @@ $params['fixed'] = TRUE;
                   <tbody>
                   <?php foreach($dishs as $k1=>$v): if($val['id'] === $v['dish_menu_id']): $index=0?>
                   <?php foreach($userdishs as $k2=>$v2): if($v2['dish_id'] === $v['dish_id']):?>
-                  <tr class="<?=$k1%2?'':'even'?>">
+                  <tr class="<?=($k1%2?'':'even').($index>0?' hide f-item':'')?>">
                       <?php if($index>0):?>
-                          <td widdth="45%" colspan="2">&nbsp;</td>
+                          <td width="45%" colspan="2">&nbsp;</td>
                       <?php else:?>
                           <td width="30%"><?=$v['dish_name']?> <span class="color-org">X <?=$v['volume']?></span></td>
                           <td width="15%">&yen;<?=$v['dish_price']?></td>
@@ -67,3 +69,4 @@ $params['fixed'] = TRUE;
       </div>
     </div>
   </div>
+<script>var pageVar = { isAdmin : true}</script>

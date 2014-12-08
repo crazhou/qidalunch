@@ -209,6 +209,23 @@ $(function() {
                 clearInterval(T)
             }, pageVar.countdown * 1000);
         }
+        // 收起与展开
+        $('.dian-header').on('click','.more', function(){
+            var t = $(this),
+                i = t.find('i'),
+                trs = t.parent().siblings('.tb2').find('tr.f-item'),
+                hasOpen = t.data('hasOpen')?true:false;
+            if(trs.size()<1) return false;
+            if(hasOpen) {
+                t.data('hasOpen', false);
+                i.attr('class', 'fa fa-angle-down');
+                trs.addClass('hide');
+            } else {
+                t.data('hasOpen', true);
+                i.attr('class', 'fa fa-angle-up');
+                trs.removeClass('hide');
+            }
+        });
 
         // 增加菜品
         var form = $('.add-dish').on('submit', function(e) {
