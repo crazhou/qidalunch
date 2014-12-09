@@ -1,7 +1,7 @@
 <?php
 return [
-    'startTime' => '00:00',
-    'endTime' => '23:50',
+    'startTime' => '9:00',
+    'endTime' => '10:45',
     'pageSize' => 50,
     'cookieParams' => [
         'lifetime' => 3600,

@@ -4,9 +4,12 @@ html,body,h1,h2,h3,ul,li,a,div,p,strong,form,input,textarea{
   padding: 0;
 }
 body{
-  background-color: #76b42d;
-  font-family: 'Microsoft Yahei', Arial;
-  font-size: 14px;
+    font-family: 'Microsoft Yahei', Arial;
+    background-color: #76b42d;
+    font-size: 14px;
+}
+img{
+    border: 0 none;
 }
 .fix {
   position: fixed;
