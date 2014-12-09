@@ -107,6 +107,7 @@ class User extends ActiveRecord implements IdentityInterface
         try {
             if($this->save()) {
                 $user_id = $this->getPrimaryKey();
+                // 更新用户余额表
                 $affect = $db->createCommand()
                     ->insert('fund',[
                         'user_id' => $user_id,
@@ -143,7 +144,6 @@ class User extends ActiveRecord implements IdentityInterface
             ->bindValue(':volume', $volume)
             ->bindValue(':user_id', $user_id)
             ->execute();
-
         return $a1 > 0 AND $a2 > 0;
     }
 
@@ -154,20 +154,34 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $db = self::getDb();
         $user_id = $this->getPrimaryKey();
-        $res = $db->createCommand('select user_id, dish_menu_name, dish_name, dish_count, date(created_at) from order_record where user_id = :user_id')
+        $res = $db->createCommand('SELECT user_id, dish_menu_name, dish_name, dish_count, date(created_at) as date FROM order_record WHERE user_id = :user_id limit 100')
             ->bindValue(':user_id', $user_id)
             ->queryAll();
-
         return $res;
     }
 
+    /*
+     * 消费记录
+     */
     public function getMyCharge()
     {
         $db = self::getDb();
         $user_id = $this->getPrimaryKey();
-        $res = $db->createCommand('select A.user_id, A.createor, B.user_name, A.change_amount, date(A.created_at), weekday(A.created_at) from recharge_record A INNER JOIN user B on B.id = A.user_id AND B.id = :user_id')
+        $res = $db->createCommand('SELECT A.user_id, A.createor, A.change_amount, date(A.created_at) as date, weekday(A.created_at) as weekindex,date(A.created_at) = curdate() as today FROM recharge_record A INNER JOIN user B on B.id = A.user_id AND B.id = :user_id order by A.created_at desc limit 100;')
             ->bindValue(':user_id', $user_id)
             ->queryAll();
+        return $res;
+    }
+
+    public function getMyBalance()
+    {
+        // $db = self::getDb();
+        $user_id = $this->getPrimaryKey();
+        $res = (new Query())
+            ->select(['user_balance', 'user_total_amount', 'user_id'])
+            ->from('fund')
+            ->where('user_id=:id',[':id'=> $user_id])
+            ->one();
         return $res;
     }
 }

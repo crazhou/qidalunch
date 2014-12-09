@@ -99,14 +99,14 @@ class OrderController extends Controller {
     public function actionHistory()
     {
         $sess = Yii::$app->session;
-
         $user = $sess->get('current_user');
-
-        var_dump('KK : ', $user->getMyOrder());
-        var_dump('Charge : ', $user->getMyCharge());
+        $balance = $user->getMyBalance();
 
         $data = [
             'user' => $user,
+            'dishs' => $user->getMyOrder(),
+            'charges' => $user->getMyCharge(),
+            'balance' =>$balance,
         ];
         return $this->render('history', $data);
     }

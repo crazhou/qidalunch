@@ -98,7 +98,6 @@ class UserController extends Controller
     public function actionList()
     {
         $sess = Yii::$app->session;
-        $cache = Yii::$app->cache;
         $data = [
             'hasCount' => FALSE,
             'fixed'  => TRUE,
