@@ -19,7 +19,6 @@ class User extends ActiveRecord implements IdentityInterface
     public $id;
     public $short;
 
-
     public static function tableName()
     {
         return '{{%user}}';
@@ -122,9 +121,7 @@ class User extends ActiveRecord implements IdentityInterface
         } catch(Exception $e) {
             return $e->getName();
         }
-
     }
-
     /*
      * @volume 金额
      * @createor 充值操作者
@@ -148,5 +145,29 @@ class User extends ActiveRecord implements IdentityInterface
             ->execute();
 
         return $a1 > 0 AND $a2 > 0;
+    }
+
+    /*
+     * 点餐记录
+     */
+    public function getMyOrder()
+    {
+        $db = self::getDb();
+        $user_id = $this->getPrimaryKey();
+        $res = $db->createCommand('select user_id, dish_menu_name, dish_name, dish_count, date(created_at) from order_record where user_id = :user_id')
+            ->bindValue(':user_id', $user_id)
+            ->queryAll();
+
+        return $res;
+    }
+
+    public function getMyCharge()
+    {
+        $db = self::getDb();
+        $user_id = $this->getPrimaryKey();
+        $res = $db->createCommand('select A.user_id, A.createor, B.user_name, A.change_amount, date(A.created_at), weekday(A.created_at) from recharge_record A INNER JOIN user B on B.id = A.user_id AND B.id = :user_id')
+            ->bindValue(':user_id', $user_id)
+            ->queryAll();
+        return $res;
     }
 }

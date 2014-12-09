@@ -100,8 +100,13 @@ class OrderController extends Controller {
     {
         $sess = Yii::$app->session;
 
+        $user = $sess->get('current_user');
+
+        var_dump('KK : ', $user->getMyOrder());
+        var_dump('Charge : ', $user->getMyCharge());
+
         $data = [
-            'user' => $sess->get('current_user')
+            'user' => $user,
         ];
         return $this->render('history', $data);
     }
